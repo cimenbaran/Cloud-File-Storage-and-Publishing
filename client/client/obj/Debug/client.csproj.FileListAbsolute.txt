@@ -1,0 +1,65 @@
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\client\client\bin\Debug\client.exe.config
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\client\client\bin\Debug\client.exe
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\client\client\bin\Debug\client.pdb
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\client\client\obj\Debug\client.csprojResolveAssemblyReference.cache
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\client\client\obj\Debug\client.Form1.resources
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\client\client\obj\Debug\client.Properties.Resources.resources
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\client\client\obj\Debug\client.csproj.GenerateResource.Cache
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\client\client\obj\Debug\client.exe
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\client\client\obj\Debug\client.pdb
+C:\Users\kagan\Desktop\client-username\client\bin\Debug\client.exe.config
+C:\Users\kagan\Desktop\client-username\client\obj\Debug\client.exe
+C:\Users\kagan\Desktop\client-username\client\obj\Debug\client.pdb
+C:\Users\kagan\Desktop\client-username\client\obj\Debug\client.csprojResolveAssemblyReference.cache
+C:\Users\kagan\Desktop\client-username\client\obj\Debug\client.Form1.resources
+C:\Users\kagan\Desktop\client-username\client\obj\Debug\client.Properties.Resources.resources
+C:\Users\kagan\Desktop\client-username\client\obj\Debug\client.csproj.GenerateResource.Cache
+C:\Users\kagan\Desktop\client-username\client\bin\Debug\client.exe
+C:\Users\kagan\Desktop\client-username\client\bin\Debug\client.pdb
+C:\Users\kagan\Desktop\client\client\bin\Debug\client.exe.config
+C:\Users\kagan\Desktop\client\client\obj\Debug\client.exe
+C:\Users\kagan\Desktop\client\client\obj\Debug\client.pdb
+C:\Users\kagan\Desktop\client\client\bin\Debug\client.exe
+C:\Users\kagan\Desktop\client\client\bin\Debug\client.pdb
+C:\Users\kagan\Desktop\client\client\obj\Debug\client.csprojResolveAssemblyReference.cache
+C:\Users\kagan\Desktop\client\client\obj\Debug\client.Form1.resources
+C:\Users\kagan\Desktop\client\client\obj\Debug\client.Properties.Resources.resources
+C:\Users\kagan\Desktop\client\client\obj\Debug\client.csproj.GenerateResource.Cache
+C:\Users\Utku\Downloads\merged\merged\client\client\bin\Debug\client.exe.config
+C:\Users\Utku\Downloads\merged\merged\client\client\obj\Debug\client.exe
+C:\Users\Utku\Downloads\merged\merged\client\client\obj\Debug\client.pdb
+C:\Users\Utku\Downloads\merged\merged\client\client\bin\Debug\client.exe
+C:\Users\Utku\Downloads\merged\merged\client\client\bin\Debug\client.pdb
+C:\Users\Utku\Downloads\merged\merged\client\client\obj\Debug\client.csprojResolveAssemblyReference.cache
+C:\Users\Utku\Downloads\merged\merged\client\client\obj\Debug\client.Form1.resources
+C:\Users\Utku\Downloads\merged\merged\client\client\obj\Debug\client.Properties.Resources.resources
+C:\Users\Utku\Downloads\merged\merged\client\client\obj\Debug\client.csproj.GenerateResource.Cache
+C:\Users\kagan\Desktop\server_client_increment_works\client\client\bin\Debug\client.exe.config
+C:\Users\kagan\Desktop\server_client_increment_works\client\client\obj\Debug\client.exe
+C:\Users\kagan\Desktop\server_client_increment_works\client\client\obj\Debug\client.pdb
+C:\Users\kagan\Desktop\server_client_increment_works\client\client\bin\Debug\client.exe
+C:\Users\kagan\Desktop\server_client_increment_works\client\client\bin\Debug\client.pdb
+C:\Users\kagan\Desktop\server_client_increment_works\client\client\obj\Debug\client.csprojResolveAssemblyReference.cache
+C:\Users\kagan\Desktop\server_client_increment_works\client\client\obj\Debug\client.Form1.resources
+C:\Users\kagan\Desktop\server_client_increment_works\client\client\obj\Debug\client.Properties.Resources.resources
+C:\Users\kagan\Desktop\server_client_increment_works\client\client\obj\Debug\client.csproj.GenerateResource.Cache
+C:\Users\Batuhan Demir\Desktop\almost_done\client\client\bin\Debug\client.exe.config
+C:\Users\Batuhan Demir\Desktop\almost_done\client\client\bin\Debug\client.exe
+C:\Users\Batuhan Demir\Desktop\almost_done\client\client\bin\Debug\client.pdb
+C:\Users\Batuhan Demir\Desktop\almost_done\client\client\obj\Debug\client.csprojAssemblyReference.cache
+C:\Users\Batuhan Demir\Desktop\almost_done\client\client\obj\Debug\client.Form1.resources
+C:\Users\Batuhan Demir\Desktop\almost_done\client\client\obj\Debug\client.Properties.Resources.resources
+C:\Users\Batuhan Demir\Desktop\almost_done\client\client\obj\Debug\client.csproj.GenerateResource.cache
+C:\Users\Batuhan Demir\Desktop\almost_done\client\client\obj\Debug\client.csproj.CoreCompileInputs.cache
+C:\Users\Batuhan Demir\Desktop\almost_done\client\client\obj\Debug\client.exe
+C:\Users\Batuhan Demir\Desktop\almost_done\client\client\obj\Debug\client.pdb
+C:\Users\Baran\Desktop\almost_done file size bug\client\client\bin\Debug\client.exe.config
+C:\Users\Baran\Desktop\almost_done file size bug\client\client\bin\Debug\client.exe
+C:\Users\Baran\Desktop\almost_done file size bug\client\client\bin\Debug\client.pdb
+C:\Users\Baran\Desktop\almost_done file size bug\client\client\obj\Debug\client.Form1.resources
+C:\Users\Baran\Desktop\almost_done file size bug\client\client\obj\Debug\client.Properties.Resources.resources
+C:\Users\Baran\Desktop\almost_done file size bug\client\client\obj\Debug\client.csproj.GenerateResource.cache
+C:\Users\Baran\Desktop\almost_done file size bug\client\client\obj\Debug\client.csproj.CoreCompileInputs.cache
+C:\Users\Baran\Desktop\almost_done file size bug\client\client\obj\Debug\client.exe
+C:\Users\Baran\Desktop\almost_done file size bug\client\client\obj\Debug\client.pdb
+C:\Users\Baran\Desktop\almost_done file size bug\client\client\obj\Debug\client.csprojAssemblyReference.cache

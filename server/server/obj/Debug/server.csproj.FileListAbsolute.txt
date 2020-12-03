@@ -1,0 +1,55 @@
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\server\server\bin\Debug\server.exe.config
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\server\server\bin\Debug\server.exe
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\server\server\bin\Debug\server.pdb
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\server\server\obj\Debug\server.csprojResolveAssemblyReference.cache
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\server\server\obj\Debug\server.Form1.resources
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\server\server\obj\Debug\server.Properties.Resources.resources
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\server\server\obj\Debug\server.csproj.GenerateResource.Cache
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\server\server\obj\Debug\server.exe
+D:\MUTKU\SABANCI\LECTURE\cs408\labs\benimdenemeler\server\server\obj\Debug\server.pdb
+C:\Users\kagan\Desktop\server\server\bin\Debug\server.exe.config
+C:\Users\kagan\Desktop\server\server\obj\Debug\server.exe
+C:\Users\kagan\Desktop\server\server\obj\Debug\server.pdb
+C:\Users\kagan\Desktop\server\server\bin\Debug\server.exe
+C:\Users\kagan\Desktop\server\server\bin\Debug\server.pdb
+C:\Users\kagan\Desktop\server\server\obj\Debug\server.csprojResolveAssemblyReference.cache
+C:\Users\kagan\Desktop\server\server\obj\Debug\server.Form1.resources
+C:\Users\kagan\Desktop\server\server\obj\Debug\server.Properties.Resources.resources
+C:\Users\kagan\Desktop\server\server\obj\Debug\server.csproj.GenerateResource.Cache
+C:\Users\Utku\Downloads\merged\merged\server\server\bin\Debug\server.exe.config
+C:\Users\Utku\Downloads\merged\merged\server\server\obj\Debug\server.exe
+C:\Users\Utku\Downloads\merged\merged\server\server\obj\Debug\server.pdb
+C:\Users\Utku\Downloads\merged\merged\server\server\bin\Debug\server.exe
+C:\Users\Utku\Downloads\merged\merged\server\server\bin\Debug\server.pdb
+C:\Users\Utku\Downloads\merged\merged\server\server\obj\Debug\server.csprojResolveAssemblyReference.cache
+C:\Users\Utku\Downloads\merged\merged\server\server\obj\Debug\server.Form1.resources
+C:\Users\Utku\Downloads\merged\merged\server\server\obj\Debug\server.Properties.Resources.resources
+C:\Users\Utku\Downloads\merged\merged\server\server\obj\Debug\server.csproj.GenerateResource.Cache
+C:\Users\kagan\Desktop\server_client_increment_works\server\server\bin\Debug\server.exe.config
+C:\Users\kagan\Desktop\server_client_increment_works\server\server\obj\Debug\server.exe
+C:\Users\kagan\Desktop\server_client_increment_works\server\server\obj\Debug\server.pdb
+C:\Users\kagan\Desktop\server_client_increment_works\server\server\bin\Debug\server.exe
+C:\Users\kagan\Desktop\server_client_increment_works\server\server\bin\Debug\server.pdb
+C:\Users\kagan\Desktop\server_client_increment_works\server\server\obj\Debug\server.csprojResolveAssemblyReference.cache
+C:\Users\kagan\Desktop\server_client_increment_works\server\server\obj\Debug\server.Form1.resources
+C:\Users\kagan\Desktop\server_client_increment_works\server\server\obj\Debug\server.Properties.Resources.resources
+C:\Users\kagan\Desktop\server_client_increment_works\server\server\obj\Debug\server.csproj.GenerateResource.Cache
+C:\Users\Batuhan Demir\Desktop\almost_done\server\server\bin\Debug\server.exe.config
+C:\Users\Batuhan Demir\Desktop\almost_done\server\server\bin\Debug\server.exe
+C:\Users\Batuhan Demir\Desktop\almost_done\server\server\bin\Debug\server.pdb
+C:\Users\Batuhan Demir\Desktop\almost_done\server\server\obj\Debug\server.csprojAssemblyReference.cache
+C:\Users\Batuhan Demir\Desktop\almost_done\server\server\obj\Debug\server.Form1.resources
+C:\Users\Batuhan Demir\Desktop\almost_done\server\server\obj\Debug\server.Properties.Resources.resources
+C:\Users\Batuhan Demir\Desktop\almost_done\server\server\obj\Debug\server.csproj.GenerateResource.cache
+C:\Users\Batuhan Demir\Desktop\almost_done\server\server\obj\Debug\server.csproj.CoreCompileInputs.cache
+C:\Users\Batuhan Demir\Desktop\almost_done\server\server\obj\Debug\server.exe
+C:\Users\Batuhan Demir\Desktop\almost_done\server\server\obj\Debug\server.pdb
+C:\Users\Baran\Desktop\almost_done file size bug\server\server\bin\Debug\server.exe.config
+C:\Users\Baran\Desktop\almost_done file size bug\server\server\bin\Debug\server.exe
+C:\Users\Baran\Desktop\almost_done file size bug\server\server\bin\Debug\server.pdb
+C:\Users\Baran\Desktop\almost_done file size bug\server\server\obj\Debug\server.Form1.resources
+C:\Users\Baran\Desktop\almost_done file size bug\server\server\obj\Debug\server.Properties.Resources.resources
+C:\Users\Baran\Desktop\almost_done file size bug\server\server\obj\Debug\server.csproj.GenerateResource.cache
+C:\Users\Baran\Desktop\almost_done file size bug\server\server\obj\Debug\server.csproj.CoreCompileInputs.cache
+C:\Users\Baran\Desktop\almost_done file size bug\server\server\obj\Debug\server.exe
+C:\Users\Baran\Desktop\almost_done file size bug\server\server\obj\Debug\server.pdb
