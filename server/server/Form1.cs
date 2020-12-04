@@ -51,6 +51,7 @@ namespace server
                 listening = true;
                 textBox_port.Enabled = false;
                 button_listen.Enabled = false;
+                choose_db.Enabled = false;
 
                 Thread acceptThread = new Thread(Accept);
                 acceptThread.Start();
