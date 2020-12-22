@@ -66,6 +66,7 @@ namespace client
                             connected = true;
                             logs.AppendText("Connected to the server!\n");
                             uploadFile.Enabled = true;
+                            button_disconnect.Enabled = true;
                             Thread receiveThread = new Thread(Receive);
                             receiveThread.Start();
                         }
@@ -180,6 +181,32 @@ namespace client
             {
                 Console.WriteLine(ex);
             }
+        }
+
+        private void button_disconnect_Click(object sender, EventArgs e)
+        {
+            string user_Name = textBox_userName.Text;
+            logs.AppendText( user_Name + "  has disconnected.\n");
+            clientSocket.Close();
+            connected = false;
+            terminating = true;
+            
+            button_disconnect.Enabled = false;
+            button_connect.Enabled = true;
+
+            textBox_port.Enabled = true;
+            textBox_port.Text = String.Empty;
+
+            textBox_ip.Enabled = true;
+            textBox_ip.Text = String.Empty;
+
+            textBox_userName.Enabled = true;
+            textBox_userName.Text = String.Empty;
+
+            uploadFile.Enabled = false;
+            textBox_userName.Enabled = true;
+
+
         }
     }
 }
