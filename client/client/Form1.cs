@@ -20,6 +20,54 @@ namespace client
         Socket clientSocket;
 
 
+        // The headers explanation
+        // -----------------------
+        //      Client --> Server
+        //      0 -> Sending a file to Server
+        //      1 ->
+        //      2 ->
+        //      3 ->
+        //      4 ->
+        //      5 ->
+        //      6 ->
+        //      7 ->
+        // -----------------------
+        //      Server --> Client
+        //      0 -> Message to Client
+        //      1 ->
+        //      2 ->
+        //      3 ->
+        //      4 ->
+        //      5 ->
+        //      6 ->
+        //      7 ->
+        // -----------------------
+        //
+        // Server'dan Client'a Recieve işlemi yapacaksanız
+        // kodunuzu Receive() fonksiyonun içindeki if'lerden birine yazın.
+        // Yukarıdaki tabloya hangi kodu kullandığınızı yazın
+        // Aynısını Server Projesinde de doldurun.
+        // -----------------------
+        //
+        // Client'tan Server'a Send işlemi yapmadan önce
+        // aşağıdaki kodu kopyalayın ve ilk olarak onu yollayın.
+        // xxxxx olan yere, yukardaki boş işlemlerden sayılardan birini yazın
+        // Yukarıdaki tabloya hangi kodu kullandığınızı yazın
+        // Aynısını Server Projesinde de doldurun.
+
+        // -----------------------
+        // Send the 1 byte to inform the server that the client is sending a file
+        // Byte[] infoHeader = new Byte[1];
+        // infoHeader[0] = xxxxx;
+        // clientSocket.Send(infoHeader);
+        // -----------------------
+        //
+        //
+        //
+
+
+
+
         public Form1()
         {
             Control.CheckForIllegalCrossThreadCalls = false;
@@ -47,28 +95,35 @@ namespace client
                         Byte[] buffer = new Byte[64];
                         buffer = Encoding.Default.GetBytes(userName);
                         clientSocket.Send(buffer);
-                        Byte[] buffer2 = new Byte[64];
-                        clientSocket.Receive(buffer2);
-                        string incomingMessage = Encoding.Default.GetString(buffer2);
-                        incomingMessage = incomingMessage.Substring(0, incomingMessage.IndexOf("\0"));
-                        if (incomingMessage == "error_username")
-                        {
-                            logs.AppendText("This username is already taken! Cannot connect to the server.\n");
-                            clientSocket.Close();
-                        }
-                        else
-                        {
-                            button_connect.Enabled = false;
-                            textBox_ip.Enabled = false;
-                            textBox_port.Enabled = false;
-                            textBox_userName.Enabled = false;
+                        // Receive the operation information
+                        Byte[] receivedInfoHeader = new Byte[1];
+                        clientSocket.Receive(receivedInfoHeader);
 
-                            connected = true;
-                            logs.AppendText("Connected to the server!\n");
-                            uploadFile.Enabled = true;
-                            button_disconnect.Enabled = true;
-                            Thread receiveThread = new Thread(Receive);
-                            receiveThread.Start();
+                        if (receivedInfoHeader[0] == 0)
+                        {
+                            Byte[] buffer2 = new Byte[64];
+                            clientSocket.Receive(buffer2);
+                            string incomingMessage = Encoding.Default.GetString(buffer2);
+                            incomingMessage = incomingMessage.Substring(0, incomingMessage.IndexOf("\0"));
+                            if (incomingMessage == "error_username")
+                            {
+                                logs.AppendText("This username is already taken! Cannot connect to the server.\n");
+                                clientSocket.Close();
+                            }
+                            else
+                            {
+                                button_connect.Enabled = false;
+                                textBox_ip.Enabled = false;
+                                textBox_port.Enabled = false;
+                                textBox_userName.Enabled = false;
+
+                                connected = true;
+                                logs.AppendText("Connected to the server!\n");
+                                uploadFile.Enabled = true;
+                                button_disconnect.Enabled = true;
+                                Thread receiveThread = new Thread(Receive);
+                                receiveThread.Start();
+                            }
                         }
 
                     }
@@ -99,20 +154,40 @@ namespace client
 
         private void Receive()
         {
+           
             // Receiving a message from the Server
             while (connected)
             {
                 try
                 {
-                    
-                    Byte[] buffer = new Byte[128];
-                    clientSocket.Receive(buffer);
+                    // Receive the operation information
+                    Byte[] receivedInfoHeader = new Byte[1];
+                    clientSocket.Receive(receivedInfoHeader);
 
-                    string incomingMessage = Encoding.Default.GetString(buffer);
-                    incomingMessage = incomingMessage.Substring(0, incomingMessage.IndexOf("\0"));
+                    if (receivedInfoHeader[0] == 0)
+                    {
+                        Byte[] buffer = new Byte[128];
+                        clientSocket.Receive(buffer);
 
-                    logs.AppendText("Server: " + incomingMessage + "\n");
+                        string incomingMessage = Encoding.Default.GetString(buffer);
+                        incomingMessage = incomingMessage.Substring(0, incomingMessage.IndexOf("\0"));
 
+                        logs.AppendText("Server: " + incomingMessage + "\n");
+                    }
+
+                    if (receivedInfoHeader[0] == 1) { }
+
+                    if (receivedInfoHeader[0] == 2) { }
+
+                    if (receivedInfoHeader[0] == 3) { }
+
+                    if (receivedInfoHeader[0] == 4) { }
+
+                    if (receivedInfoHeader[0] == 5) { }
+
+                    if (receivedInfoHeader[0] == 6) { }
+
+                    if (receivedInfoHeader[0] == 7) { }
                 }
                 catch
                 {
@@ -132,6 +207,7 @@ namespace client
 
                 }
             }
+            
         }
 
         private void Form1_FormClosing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -154,6 +230,12 @@ namespace client
                 if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     // If the file is selected
+
+                    // Send the 1 byte to inform the server that the client is sending a file
+                    Byte[] infoHeader = new Byte[1];
+                    infoHeader[0] = 0;
+                    clientSocket.Send(infoHeader);
+
                     int fileProperties = 256; // FileName + The Data's Length
                     int fileNameLength = 128; // FileName
                     string fileLength = File.ReadAllBytes(dialog.FileName).Length.ToString(); // The Data's Length is turned into string 
@@ -174,7 +256,7 @@ namespace client
 
                     // Send the data to the surver via generalBuffer
                     clientSocket.Send(generalBuffer);
-
+                    logs.AppendText("Sent file: \"" + dialog.SafeFileName + "\" \n");
                 }
             }
             catch (Exception ex)

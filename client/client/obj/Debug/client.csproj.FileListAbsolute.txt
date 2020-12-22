@@ -63,3 +63,13 @@ C:\Users\Baran\Desktop\almost_done file size bug\client\client\obj\Debug\client.
 C:\Users\Baran\Desktop\almost_done file size bug\client\client\obj\Debug\client.exe
 C:\Users\Baran\Desktop\almost_done file size bug\client\client\obj\Debug\client.pdb
 C:\Users\Baran\Desktop\almost_done file size bug\client\client\obj\Debug\client.csprojAssemblyReference.cache
+C:\Users\Baran\Desktop\Code\Courses\CS408\Ready to launch - Step 1\client\client\bin\Debug\client.exe.config
+C:\Users\Baran\Desktop\Code\Courses\CS408\Ready to launch - Step 1\client\client\bin\Debug\client.exe
+C:\Users\Baran\Desktop\Code\Courses\CS408\Ready to launch - Step 1\client\client\bin\Debug\client.pdb
+C:\Users\Baran\Desktop\Code\Courses\CS408\Ready to launch - Step 1\client\client\obj\Debug\client.csprojAssemblyReference.cache
+C:\Users\Baran\Desktop\Code\Courses\CS408\Ready to launch - Step 1\client\client\obj\Debug\client.Form1.resources
+C:\Users\Baran\Desktop\Code\Courses\CS408\Ready to launch - Step 1\client\client\obj\Debug\client.Properties.Resources.resources
+C:\Users\Baran\Desktop\Code\Courses\CS408\Ready to launch - Step 1\client\client\obj\Debug\client.csproj.GenerateResource.cache
+C:\Users\Baran\Desktop\Code\Courses\CS408\Ready to launch - Step 1\client\client\obj\Debug\client.csproj.CoreCompileInputs.cache
+C:\Users\Baran\Desktop\Code\Courses\CS408\Ready to launch - Step 1\client\client\obj\Debug\client.exe
+C:\Users\Baran\Desktop\Code\Courses\CS408\Ready to launch - Step 1\client\client\obj\Debug\client.pdb
