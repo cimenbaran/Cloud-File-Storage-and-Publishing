@@ -18,7 +18,7 @@ namespace client
         bool terminating = false;
         bool connected = false;
         Socket clientSocket;
-
+        string downloadpath = "";
 
         // The headers explanation
         // -----------------------
@@ -27,7 +27,7 @@ namespace client
         //      1 ->
         //      2 ->
         //      3 ->
-        //      4 ->
+        //      4 -> Downloading file from the Server (Download)
         //      5 ->
         //      6 ->
         //      7 ->
@@ -37,7 +37,7 @@ namespace client
         //      1 ->
         //      2 ->
         //      3 ->
-        //      4 ->
+        //      4 -> Sending file to Client (Download)
         //      5 ->
         //      6 ->
         //      7 ->
@@ -116,6 +116,8 @@ namespace client
                                 textBox_ip.Enabled = false;
                                 textBox_port.Enabled = false;
                                 textBox_userName.Enabled = false;
+                                button_download.Enabled = true;
+                                textBox_download.Enabled = true;
 
                                 connected = true;
                                 logs.AppendText("Connected to the server!\n");
@@ -154,7 +156,7 @@ namespace client
 
         private void Receive()
         {
-           
+
             // Receiving a message from the Server
             while (connected)
             {
@@ -181,7 +183,33 @@ namespace client
 
                     if (receivedInfoHeader[0] == 3) { }
 
-                    if (receivedInfoHeader[0] == 4) { }
+                    if (receivedInfoHeader[0] == 4)
+                    {                     
+
+                        // Receive the incoming File's name and size
+                        Byte[] fileProperties = new byte[256]; // First 128 Bytes are for Name, Last 128 for Size
+                        clientSocket.Receive(fileProperties); // Receive the Buffer
+
+                        // Take the file name from the buffer
+                        string fileName = Encoding.Default.GetString(fileProperties.Take(128).ToArray());
+                        fileName = fileName.Substring(0, fileName.IndexOf("\0"));
+
+                        // Take the file size from buffer
+                        int fileSize = Int32.Parse(Encoding.Default.GetString(fileProperties.Skip(128).Take(128).ToArray()));
+
+                        // Get the file data
+                        Byte[] buffer2 = new Byte[fileSize]; // The buffer size is allocated by the file size
+                        clientSocket.Receive(buffer2);
+
+                        BinaryWriter bWrite = new BinaryWriter(File.Open // using system.I/O
+                                        (downloadpath + "/" + fileName, FileMode.Append));
+                        bWrite.Write(buffer2);
+                        bWrite.Close();
+                        buffer2 = null; // In order to prevent creating files over and over again
+
+                        // Print the logs and send the confirmation message to the Client
+                        logs.AppendText("Downloaded file: \"" + fileName + "\" from: the server." + "\n"); // Log message
+                    }
 
                     if (receivedInfoHeader[0] == 5) { }
 
@@ -199,6 +227,8 @@ namespace client
                         textBox_ip.Enabled = true;
                         uploadFile.Enabled = false;
                         textBox_userName.Enabled = true;
+                        button_download.Enabled = false;
+                        textBox_download.Enabled = false;
 
                     }
 
@@ -207,7 +237,7 @@ namespace client
 
                 }
             }
-            
+
         }
 
         private void Form1_FormClosing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -240,12 +270,11 @@ namespace client
                     int fileNameLength = 128; // FileName
                     string fileLength = File.ReadAllBytes(dialog.FileName).Length.ToString(); // The Data's Length is turned into string 
                                                                                               // to put into a Byte Array with the FileName
-
+            
                     Byte[] filePropertiesBuffer = new Byte[fileProperties]; // Allocate space for FileName and The Data's Length
-
                     // Copy the FileName and The Data's Length into the filePropertiesBuffer
                     Array.Copy(Encoding.Default.GetBytes(dialog.SafeFileName), filePropertiesBuffer, dialog.SafeFileName.Length);
-                    Array.Copy( Encoding.ASCII.GetBytes(fileLength),0, filePropertiesBuffer, fileNameLength,fileLength.Length);
+                    Array.Copy(Encoding.ASCII.GetBytes(fileLength), 0, filePropertiesBuffer, fileNameLength, fileLength.Length);
 
                     // Send the filePropertiesBuffer to the Server
                     clientSocket.Send(filePropertiesBuffer);
@@ -268,11 +297,11 @@ namespace client
         private void button_disconnect_Click(object sender, EventArgs e)
         {
             string user_Name = textBox_userName.Text;
-            logs.AppendText( user_Name + "  has disconnected.\n");
+            logs.AppendText(user_Name + "  has disconnected.\n");
             clientSocket.Close();
             connected = false;
             terminating = true;
-            
+
             button_disconnect.Enabled = false;
             button_connect.Enabled = true;
 
@@ -289,6 +318,41 @@ namespace client
             textBox_userName.Enabled = true;
 
 
+        }
+
+        private void button_download_Click(object sender, EventArgs e)
+        {
+            string filename = textBox_download.Text;
+            ///////////////////////
+            // if in icine && den sonra list in icinde var mi yok mu kontrolu olcak 
+            // string list = "";
+            // list icinde bosluklarla ayrilabilir txt isimleri 
+            // bi global list tutulur burda
+            if (filename == "" )
+            {
+                logs.AppendText("Wrong input for downloading... You can only download a file from the list.\n");
+            }
+            else
+            {
+                Byte[] infoHeader = new Byte[1];
+                infoHeader[0] = 4;
+                using (var fbd = new FolderBrowserDialog())
+                {
+                    DialogResult result = fbd.ShowDialog();
+                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                    {
+                        string folderPath = fbd.SelectedPath;
+                        downloadpath = folderPath;
+                        downloadpath = folderPath.Replace(@"\", "/"); // DO NOT CHANGE PATH CORRECTION
+                    }
+                }
+                clientSocket.Send(infoHeader);
+                Byte[] buffer = new Byte[64];
+                buffer = Encoding.Default.GetBytes(filename);
+                clientSocket.Send(buffer);
+
+            }
+            
         }
     }
 }

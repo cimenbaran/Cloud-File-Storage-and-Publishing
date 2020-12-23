@@ -30,7 +30,7 @@ namespace server
         //      1 ->
         //      2 ->
         //      3 ->
-        //      4 ->
+        //      4 -> Downloading file from the Server (Download)
         //      5 ->
         //      6 ->
         //      7 ->
@@ -40,7 +40,7 @@ namespace server
         //      1 ->
         //      2 ->
         //      3 ->
-        //      4 ->
+        //      4 -> Sending file to Client (Download)
         //      5 ->
         //      6 ->
         //      7 ->
@@ -281,7 +281,41 @@ namespace server
 
                     if (receivedInfoHeader[0] == 3) { }
 
-                    if (receivedInfoHeader[0] == 4) { }
+                    if (receivedInfoHeader[0] == 4)
+                    {
+                        // Send the 1 byte to inform the server that the client is sending a file
+                        Byte[] infoHeader = new Byte[1];
+                        infoHeader[0] = 4;
+                        thisClient.Send(infoHeader);
+
+
+                        Byte[] buffer_filename = new Byte[128];
+                        thisClient.Receive(buffer_filename);
+                        string filename = Encoding.Default.GetString(buffer_filename);
+                        filename = filename.Substring(0, filename.IndexOf("\0"));
+                        string filepathname = DB_Path + "/" + filename;
+
+                        int fileProperties = 256; // FileName + The Data's Length
+                        int fileNameLength = 128; // FileName
+                        string fileLength = File.ReadAllBytes(filepathname).Length.ToString(); // The Data's Length is turned into string 
+                                                                                                  // to put into a Byte Array with the FileName
+
+                        Byte[] filePropertiesBuffer = new Byte[fileProperties]; // Allocate space for FileName and The Data's Length
+
+                        // Copy the FileName and The Data's Length into the filePropertiesBuffer
+                        Array.Copy(Encoding.Default.GetBytes(filename), filePropertiesBuffer, filename.Length);
+                        Array.Copy(Encoding.ASCII.GetBytes(fileLength), 0, filePropertiesBuffer, fileNameLength, fileLength.Length);
+
+                        // Send the filePropertiesBuffer to the Server
+                        thisClient.Send(filePropertiesBuffer);
+
+                        // Copy the data into generalBuffer
+                        Byte[] generalBuffer = new Byte[File.ReadAllBytes(filepathname).Length];
+                        generalBuffer = File.ReadAllBytes(filepathname);
+
+                        // Send the data to the surver via generalBuffer
+                        thisClient.Send(generalBuffer);
+                    }
 
                     if (receivedInfoHeader[0] == 5) { }
 
