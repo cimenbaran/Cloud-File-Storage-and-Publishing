@@ -40,6 +40,10 @@
             this.button_disconnect = new System.Windows.Forms.Button();
             this.button_download = new System.Windows.Forms.Button();
             this.textBox_download = new System.Windows.Forms.TextBox();
+            this.button_list = new System.Windows.Forms.Button();
+            this.button_makepublic = new System.Windows.Forms.Button();
+            this.textBox_toPublic = new System.Windows.Forms.TextBox();
+            this.button_publiclist = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -86,10 +90,10 @@
             // 
             // logs
             // 
-            this.logs.Location = new System.Drawing.Point(249, 47);
+            this.logs.Location = new System.Drawing.Point(305, 47);
             this.logs.Name = "logs";
             this.logs.ReadOnly = true;
-            this.logs.Size = new System.Drawing.Size(506, 328);
+            this.logs.Size = new System.Drawing.Size(450, 328);
             this.logs.TabIndex = 6;
             this.logs.Text = "";
             // 
@@ -152,11 +156,56 @@
             this.textBox_download.Size = new System.Drawing.Size(75, 20);
             this.textBox_download.TabIndex = 11;
             // 
+            // button_list
+            // 
+            this.button_list.Enabled = false;
+            this.button_list.Location = new System.Drawing.Point(49, 297);
+            this.button_list.Name = "button_list";
+            this.button_list.Size = new System.Drawing.Size(75, 23);
+            this.button_list.TabIndex = 12;
+            this.button_list.Text = "Get List";
+            this.button_list.UseVisualStyleBackColor = true;
+            this.button_list.Click += new System.EventHandler(this.button_list_Click);
+            // 
+            // button_makepublic
+            // 
+            this.button_makepublic.Enabled = false;
+            this.button_makepublic.Location = new System.Drawing.Point(49, 352);
+            this.button_makepublic.Name = "button_makepublic";
+            this.button_makepublic.Size = new System.Drawing.Size(75, 23);
+            this.button_makepublic.TabIndex = 13;
+            this.button_makepublic.Text = "Make Public";
+            this.button_makepublic.UseVisualStyleBackColor = true;
+            this.button_makepublic.Click += new System.EventHandler(this.button_makepublic_Click);
+            // 
+            // textBox_toPublic
+            // 
+            this.textBox_toPublic.Enabled = false;
+            this.textBox_toPublic.Location = new System.Drawing.Point(49, 326);
+            this.textBox_toPublic.Name = "textBox_toPublic";
+            this.textBox_toPublic.Size = new System.Drawing.Size(75, 20);
+            this.textBox_toPublic.TabIndex = 14;
+            // 
+            // button_publiclist
+            // 
+            this.button_publiclist.Enabled = false;
+            this.button_publiclist.Location = new System.Drawing.Point(144, 297);
+            this.button_publiclist.Name = "button_publiclist";
+            this.button_publiclist.Size = new System.Drawing.Size(99, 23);
+            this.button_publiclist.TabIndex = 15;
+            this.button_publiclist.Text = "Get Public List";
+            this.button_publiclist.UseVisualStyleBackColor = true;
+            this.button_publiclist.Click += new System.EventHandler(this.button_publiclist_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(823, 391);
+            this.Controls.Add(this.button_publiclist);
+            this.Controls.Add(this.textBox_toPublic);
+            this.Controls.Add(this.button_makepublic);
+            this.Controls.Add(this.button_list);
             this.Controls.Add(this.textBox_download);
             this.Controls.Add(this.button_download);
             this.Controls.Add(this.button_disconnect);
@@ -190,6 +239,10 @@
         private System.Windows.Forms.Button button_disconnect;
         private System.Windows.Forms.Button button_download;
         private System.Windows.Forms.TextBox textBox_download;
+        private System.Windows.Forms.Button button_list;
+        private System.Windows.Forms.Button button_makepublic;
+        private System.Windows.Forms.TextBox textBox_toPublic;
+        private System.Windows.Forms.Button button_publiclist;
     }
 }
 

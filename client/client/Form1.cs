@@ -19,16 +19,18 @@ namespace client
         bool connected = false;
         Socket clientSocket;
         string downloadpath = "";
+        List<String> list = new List<String>();
+        List<String> publiclist = new List<String>();
 
         // The headers explanation
         // -----------------------
         //      Client --> Server
         //      0 -> Sending a file to Server
-        //      1 ->
+        //      1 -> Make file public
         //      2 ->
         //      3 ->
         //      4 -> Downloading file from the Server (Download)
-        //      5 ->
+        //      5 -> Getting list from Server (Get List)
         //      6 ->
         //      7 ->
         // -----------------------
@@ -38,7 +40,7 @@ namespace client
         //      2 ->
         //      3 ->
         //      4 -> Sending file to Client (Download)
-        //      5 ->
+        //      5 -> Sending list as a string (Get List)
         //      6 ->
         //      7 ->
         // -----------------------
@@ -116,8 +118,8 @@ namespace client
                                 textBox_ip.Enabled = false;
                                 textBox_port.Enabled = false;
                                 textBox_userName.Enabled = false;
-                                button_download.Enabled = true;
-                                textBox_download.Enabled = true;
+                                button_list.Enabled = true;
+                                button_publiclist.Enabled = true;
 
                                 connected = true;
                                 logs.AppendText("Connected to the server!\n");
@@ -221,9 +223,53 @@ namespace client
                         logs.AppendText("Downloaded file: \"" + fileName + "\" from: the server." + "\n"); // Log message
                     }
 
-                    if (receivedInfoHeader[0] == 5) { }
+                    if (receivedInfoHeader[0] == 5)
+                    {
+                        Byte[] buffer_size = new Byte[64];
+                        clientSocket.Receive(buffer_size);
+                        string list_size = Encoding.Default.GetString(buffer_size);
+                        list_size = list_size.Substring(0, list_size.IndexOf("\0"));
+                        int list_size_int = Int32.Parse(list_size);
+                        Byte[] buffer = new Byte[128];
+                        for (int i = 0; i <list_size_int; i++)
+                        {
+                            clientSocket.Receive(buffer);
+                            string incomingList = Encoding.Default.GetString(buffer);
+                            incomingList = incomingList.Substring(0, incomingList.IndexOf("\0"));
+                            incomingList = incomingList.Substring(0, incomingList.IndexOf("PM") + 2);
+                            list.Add(incomingList);
+                        }
+                        logs.AppendText("You can download or make public the following files.\n");
+                        for (int i = 0; i < list.Count ; i++)
+                        {
+                            logs.AppendText(list[i] + "\n");
+                        }
 
-                    if (receivedInfoHeader[0] == 6) { }
+                        
+                    }
+
+                    if (receivedInfoHeader[0] == 6)
+                    {
+                        Byte[] buffer_size = new Byte[64];
+                        clientSocket.Receive(buffer_size);
+                        string list_size = Encoding.Default.GetString(buffer_size);
+                        list_size = list_size.Substring(0, list_size.IndexOf("\0"));
+                        int list_size_int = Int32.Parse(list_size);
+                        Byte[] buffer = new Byte[128];
+                        for (int i = 0; i < list_size_int; i++)
+                        {
+                            clientSocket.Receive(buffer);
+                            string incomingList = Encoding.Default.GetString(buffer);
+                            incomingList = incomingList.Substring(0, incomingList.IndexOf("\0"));
+                            incomingList = incomingList.Substring(0, incomingList.IndexOf("PM") + 2);
+                            publiclist.Add(incomingList);
+                        }
+                        logs.AppendText("Here is the public files from the server.\n");
+                        for (int i = 0; i < publiclist.Count; i++)
+                        {
+                            logs.AppendText(publiclist[i] + "\n");
+                        }
+                    }
 
                     if (receivedInfoHeader[0] == 7) { }
                 }
@@ -296,6 +342,12 @@ namespace client
                     // Send the data to the surver via generalBuffer
                     clientSocket.Send(generalBuffer);
                     logs.AppendText("Sent file: \"" + dialog.SafeFileName + "\" \n");
+
+                    button_list.Enabled = true;
+                    button_download.Enabled = false;
+                    textBox_download.Enabled = false;
+                    button_makepublic.Enabled = false;
+                    textBox_toPublic.Enabled = false;
                 }
             }
             catch (Exception ex)
@@ -338,7 +390,15 @@ namespace client
             // string list = "";
             // list icinde bosluklarla ayrilabilir txt isimleri 
             // bi global list tutulur burda
-            if (filename == "" )
+            bool flag = false;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (filename == list[i].Split('\t')[0])
+                {
+                    flag = true;
+                }
+            }
+            if (filename == "" || !flag)
             {
                 logs.AppendText("Wrong input for downloading... You can only download a file from the list.\n");
             }
@@ -357,12 +417,60 @@ namespace client
                     }
                 }
                 clientSocket.Send(infoHeader);
-                Byte[] buffer = new Byte[64];
+                Byte[] buffer = new Byte[128];
                 buffer = Encoding.Default.GetBytes(filename);
                 clientSocket.Send(buffer);
 
             }
             
+        }
+
+        private void button_list_Click(object sender, EventArgs e)
+        {
+            list.Clear();
+            button_makepublic.Enabled = true;
+            textBox_toPublic.Enabled = true;
+            button_download.Enabled = true;
+            textBox_download.Enabled = true;
+            Byte[] infoHeader = new Byte[1];
+            infoHeader[0] = 5;
+            clientSocket.Send(infoHeader);
+        }
+
+        private void button_makepublic_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string fileNameToPublic = textBox_toPublic.Text;
+                Byte[] bufferToPublic = new Byte[128];
+                if (fileNameToPublic == "" || fileNameToPublic.Length >= 128)
+                {
+                    logs.AppendText("Enter a file name less than 64 character");
+                    return;
+                }
+
+                // Send the 1 byte to inform the server that the client is sending a file
+                Byte[] infoHeader = new Byte[1];
+                infoHeader[0] = 1;
+                clientSocket.Send(infoHeader);
+
+
+                bufferToPublic = Encoding.Default.GetBytes(fileNameToPublic);
+                clientSocket.Send(bufferToPublic);
+                
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void button_publiclist_Click(object sender, EventArgs e)
+        {
+            publiclist.Clear();
+            Byte[] infoHeader = new Byte[1];
+            infoHeader[0] = 6;
+            clientSocket.Send(infoHeader);
         }
     }
 }

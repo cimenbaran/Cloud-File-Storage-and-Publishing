@@ -31,7 +31,7 @@ namespace server
         //      2 ->
         //      3 ->
         //      4 -> Downloading file from the Server (Download)
-        //      5 ->
+        //      5 -> Getting list from Server (Get List)
         //      6 ->
         //      7 ->
         // -----------------------
@@ -41,7 +41,7 @@ namespace server
         //      2 ->
         //      3 ->
         //      4 -> Sending file to Client (Download)
-        //      5 ->
+        //      5 -> Sending list as a string (Get List)
         //      6 ->
         //      7 ->
         // -----------------------
@@ -260,8 +260,9 @@ namespace server
                         bWrite.Close();
 
                         // Write into LOGS.txt
+                        DateTime localDate = DateTime.Now;
                         BinaryWriter bWriteLog = new BinaryWriter(File.Open(LOGS_Path, FileMode.Append));
-                        Byte[] logBuffer = Encoding.Default.GetBytes(clientUsername + "\t" + fileName_basic + "\n");
+                        Byte[] logBuffer = Encoding.Default.GetBytes(clientUsername + "\t" + fileName_basic + "\t" + "0" + "\t"+ fileSize + "bytes" +"\t" + localDate.ToString() + "\n");
                         bWriteLog.Write(logBuffer.ToArray());
                         bWriteLog.Close();
 
@@ -270,12 +271,41 @@ namespace server
                         // Print the logs and send the confirmation message to the Client
                         logs.AppendText("Received file: \"" + fileName_basic + "\" from: \"" + clientUsername + "\"\n"); // Log message
                         string receivedFile = "Uploaded file: \"" + fileName_basic + "\" from: \"" + clientUsername + "\" successfully.." + "\n";
+
+                        //Byte[] infoHeader = new Byte[1];
+                        //infoHeader[0] = 0;
+                        //thisClient.Send(infoHeader);
+
                         Byte[] buffer2 = new Byte[64];
                         buffer2 = Encoding.Default.GetBytes(receivedFile);
                         thisClient.Send(buffer2);
                     }
 
-                    if (receivedInfoHeader[0] == 1) { }
+                    if (receivedInfoHeader[0] == 1)
+                    {
+                        try
+                        {
+
+                            Byte[] buffer_fileNameToPublic = new Byte[128];
+                            thisClient.Receive(buffer_fileNameToPublic);
+                            string fileNameToPublic = Encoding.Default.GetString(buffer_fileNameToPublic);
+                            fileNameToPublic = fileNameToPublic.Substring(0, fileNameToPublic.IndexOf("\0"));
+
+                            string toClient = makePublic(fileNameToPublic, clientUsername);
+
+                            Byte[] infoHeader = new Byte[1];
+                            infoHeader[0] = 0;
+                            thisClient.Send(infoHeader);
+
+                            Byte[] buffer_toClient = new Byte[128];
+                            buffer_toClient = Encoding.Default.GetBytes(toClient);
+                            thisClient.Send(buffer_toClient);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
+                    }
 
                     if (receivedInfoHeader[0] == 2) { }
 
@@ -293,6 +323,27 @@ namespace server
                         thisClient.Receive(buffer_filename);
                         string filename = Encoding.Default.GetString(buffer_filename);
                         filename = filename.Substring(0, filename.IndexOf("\0"));
+                        
+                        filename = clientUsername + "_" + filename;
+                        if (!File.Exists(DB_Path + "/" + filename))
+                        {
+                            StreamReader logReader = new StreamReader(LOGS_Path);
+                            string line = "";
+                            while ((line = logReader.ReadLine()) != null)
+                            {
+                                if (line.Split('\t')[2] == "0")
+                                {
+                                    continue;
+                                }
+                                if (line.Split('\t')[1].Split('_')[1] != filename.Split('_')[1])
+                                {
+                                    continue;
+                                }
+                                filename = line.Split('\t')[1];
+                            }
+                            logReader.Close();
+
+                        }
                         string filepathname = DB_Path + "/" + filename;
 
                         int fileProperties = 256; // FileName + The Data's Length
@@ -317,9 +368,88 @@ namespace server
                         thisClient.Send(generalBuffer);
                     }
 
-                    if (receivedInfoHeader[0] == 5) { }
+                    if (receivedInfoHeader[0] == 5)
+                    {
+                        Byte[] infoHeader = new Byte[1];
+                        infoHeader[0] = 5;
+                        thisClient.Send(infoHeader);
+                        // Read the LOGS.txt file to determine the list
+                        StreamReader logReader = new StreamReader(LOGS_Path);
+                        string line = "";
+                        List<String> fileList = new List<String>();
+                        while ((line = logReader.ReadLine()) != null)
+                        {
+                            if (!(line.Split('\t')[0] == clientUsername))
+                            {
+                                if (line.Split('\t')[2] == "0")
+                                {
+                                    continue;
+                                }
+                            }
+                            fileList.Add(line.Split('\t')[1].Split('_')[1]+ "\t"+line.Split('\t')[3] + "\t" + line.Split('\t')[4]);
+                        }
+                        logReader.Close();
+                        string count = fileList.Count.ToString();
+                        Byte[] buffer_count = new Byte[64];
+                        buffer_count = Encoding.Default.GetBytes(count);
+                        thisClient.Send(buffer_count);
+                        buffer_count = null;
+                        Thread.Sleep(100);
+                        for (int i = 0; i < fileList.Count; i++)
+                        {
+                            Byte[] buffer = new Byte[128];
+                            buffer = Encoding.Default.GetBytes(fileList[i]);
+                            thisClient.Send(buffer);
+                            Thread.Sleep(100);
+                        }
+                        // Send the 1 byte to inform the server that the client is sending a file
+                        infoHeader[0] = 0;
+                        thisClient.Send(infoHeader);
 
-                    if (receivedInfoHeader[0] == 6) { }
+                        Byte[] buffer_toClient = new Byte[128];
+                        buffer_toClient = Encoding.Default.GetBytes("List of files successfully sent to the you.\n");
+                        thisClient.Send(buffer_toClient);
+                    }
+
+                    if (receivedInfoHeader[0] == 6)
+                    {
+                        Byte[] infoHeader = new Byte[1];
+                        infoHeader[0] = 6;
+                        thisClient.Send(infoHeader);
+                        // Read the LOGS.txt file to determine the list
+                        StreamReader logReader = new StreamReader(LOGS_Path);
+                        string line = "";
+                        List<String> fileList = new List<String>();
+                        while ((line = logReader.ReadLine()) != null)
+                        {
+                            if (line.Split('\t')[2] == "0")
+                            {
+                                continue;
+                            }
+                            fileList.Add(line.Split('\t')[0] + "\t" + line.Split('\t')[1].Split('_')[1] + "\t" + line.Split('\t')[3] + "\t" + line.Split('\t')[4]);
+                        }
+                        logReader.Close();
+                        string count = fileList.Count.ToString();
+                        Byte[] buffer_count = new Byte[64];
+                        buffer_count = Encoding.Default.GetBytes(count);
+                        thisClient.Send(buffer_count);
+                        buffer_count = null;
+                        Thread.Sleep(100);
+                        for (int i = 0; i < fileList.Count; i++)
+                        {
+                            Byte[] buffer = new Byte[128];
+                            buffer = Encoding.Default.GetBytes(fileList[i]);
+                            thisClient.Send(buffer);
+                            Thread.Sleep(100);
+                        }
+                        // Send the 1 byte to inform the server that the client is sending a file
+                        infoHeader[0] = 0;
+                        thisClient.Send(infoHeader);
+
+                        Byte[] buffer_toClient = new Byte[128];
+                        buffer_toClient = Encoding.Default.GetBytes("List of public files successfully sent to the you.\n");
+                        thisClient.Send(buffer_toClient);
+                    }
 
                     if (receivedInfoHeader[0] == 7) { }
                 }
@@ -337,6 +467,66 @@ namespace server
                     connected = false;
                 }
                 
+            }
+        }
+
+        private string makePublic(string fileName, string clientUsername)
+        {
+            StreamReader logReader = new StreamReader(LOGS_Path);
+            string line = "";
+            bool flag = false;
+            int lineNo = 0;
+            //bool flag2 = false;
+            while ((line = logReader.ReadLine()) != null)
+            {
+                if (!(line.Split('\t')[0] == clientUsername))
+                {
+                    lineNo++;
+                    continue;
+                }
+                string lineFileName = "";
+                lineFileName = line.Split('\t')[1];
+                lineFileName = lineFileName.Substring(lineFileName.IndexOf("_") + 1);
+                //logs.AppendText("@" + lineFileName + "@" + fileName + "@\n");
+                if (lineFileName.Trim() == fileName.Trim())
+                {
+                    //logs.AppendText(lineNo + "file bulundu\n");
+                    flag = true;
+                    if (line.Split('\t')[2] == "1")
+                    {
+                        logReader.Close();
+                        return ("The file " + fileName + " is already public.");
+                    }
+                    else
+                    {
+                        logReader.Close();
+                        string newLine = line.Split('\t')[0] + '\t' + line.Split('\t')[1] + '\t' + "1\t"+ line.Split('\t')[3] + '\t' + line.Split('\t')[4];
+                        lineChanger(newLine, LOGS_Path, lineNo);
+                        logs.AppendText(fileName + " made public succesfully for the user " + clientUsername + '\n');
+                        return (fileName + " made public succesfully.");
+                    }
+                }
+                lineNo++;
+            }
+            logReader.Close();
+            if (!flag)
+            {
+                return ("There is no such a file " + fileName + " belongs to you.\n");
+            }
+            return ("something\n");
+        }
+
+        private static void lineChanger(string newText, string fileName, int line_to_edit)
+        {
+            try
+            {
+                string[] arrLine = File.ReadAllLines(fileName);
+                arrLine[line_to_edit] = newText;
+                File.WriteAllLines(fileName, arrLine);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
 
