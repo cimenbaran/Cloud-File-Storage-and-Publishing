@@ -27,7 +27,7 @@ namespace server
         // -----------------------
         //      Client --> Server
         //      0 -> Sending a file to Server
-        //      1 ->
+        //      1 -> Make file public
         //      2 ->
         //      3 ->
         //      4 -> Downloading file from the Server (Download)
@@ -114,7 +114,7 @@ namespace server
             {
                 try
                 {
-                    
+
                     Socket newClient = serverSocket.Accept();
                     Byte[] buffer = new Byte[64];
                     newClient.Receive(buffer);
@@ -132,8 +132,8 @@ namespace server
                         logs.AppendText("The username \"" + incomingUsername + "\" is already taken! Cannot connect to the server.\n");
                         string errorUsername = "error_username";
                         Byte[] buffer2 = Encoding.Default.GetBytes(errorUsername);
-                        
-                        
+
+
 
                         newClient.Send(buffer2);
                         newClient.Close();
@@ -151,7 +151,7 @@ namespace server
                         string noError = "All OK.";
                         Byte[] buffer2 = Encoding.Default.GetBytes(noError);
 
-                        
+
 
                         newClient.Send(buffer2);
                         clientUsernames.Add(incomingUsername);
@@ -176,13 +176,13 @@ namespace server
         }
 
         private void Receive(Socket thisClient, string clientUsername)
-        {   
-            
+        {
+
             bool connected = true;
             while (connected && !terminating)
             {
 
-                    
+
 
                 try
                 {
@@ -261,7 +261,7 @@ namespace server
 
                         // Write into LOGS.txt
                         BinaryWriter bWriteLog = new BinaryWriter(File.Open(LOGS_Path, FileMode.Append));
-                        Byte[] logBuffer = Encoding.Default.GetBytes(clientUsername + "\t" + fileName_basic + "\n");
+                        Byte[] logBuffer = Encoding.Default.GetBytes(clientUsername + "\t" + fileName_basic + "\t" + "0" + "\n");
                         bWriteLog.Write(logBuffer.ToArray());
                         bWriteLog.Close();
 
@@ -275,7 +275,31 @@ namespace server
                         thisClient.Send(buffer2);
                     }
 
-                    if (receivedInfoHeader[0] == 1) { }
+                    if (receivedInfoHeader[0] == 1)
+                    {
+                        try
+                        {
+
+                            Byte[] buffer_fileNameToPublic = new Byte[128];
+                            thisClient.Receive(buffer_fileNameToPublic);
+                            string fileNameToPublic = Encoding.Default.GetString(buffer_fileNameToPublic);
+                            fileNameToPublic = fileNameToPublic.Substring(0, fileNameToPublic.IndexOf("\0"));
+
+                            string toClient = makePublic(fileNameToPublic, clientUsername);
+
+                            Byte[] infoHeader = new Byte[1];
+                            infoHeader[0] = 0;
+                            thisClient.Send(infoHeader);
+
+                            Byte[] buffer_toClient = new Byte[128];
+                            buffer_toClient = Encoding.Default.GetBytes(toClient);
+                            thisClient.Send(buffer_toClient);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
+                    }
 
                     if (receivedInfoHeader[0] == 2) { }
 
@@ -298,7 +322,7 @@ namespace server
                         int fileProperties = 256; // FileName + The Data's Length
                         int fileNameLength = 128; // FileName
                         string fileLength = File.ReadAllBytes(filepathname).Length.ToString(); // The Data's Length is turned into string 
-                                                                                                  // to put into a Byte Array with the FileName
+                                                                                               // to put into a Byte Array with the FileName
 
                         Byte[] filePropertiesBuffer = new Byte[fileProperties]; // Allocate space for FileName and The Data's Length
 
@@ -336,11 +360,67 @@ namespace server
                     thisClient.Close();
                     connected = false;
                 }
-                
+
             }
         }
 
 
+        private string makePublic(string fileName, string clientUsername)
+        {
+            StreamReader logReader = new StreamReader(LOGS_Path);
+            string line = "";
+            bool flag = false;
+            int lineNo = 0;
+            //bool flag2 = false;
+            while ((line = logReader.ReadLine()) != null)
+            {
+                if (!(line.Split('\t')[0] == clientUsername))
+                    continue;
+                string lineFileName = "";
+                lineFileName = line.Split('\t')[1];
+                lineFileName = lineFileName.Substring(lineFileName.IndexOf("_") + 1);
+                //logs.AppendText("@" + lineFileName + "@" + fileName + "@\n");
+                if (lineFileName.Trim() == fileName.Trim())
+                {
+                    //logs.AppendText(lineNo + "file bulundu\n");
+                    flag = true;
+                    if (line.Split('\t')[2] == "1")
+                    {
+                        logReader.Close();
+                        return ("The file " + fileName + " is already public.");
+                    }
+                    else
+                    {
+                        logReader.Close();
+                        string newLine = line.Split('\t')[0] + '\t' + line.Split('\t')[1] + '\t' + "1";
+                        lineChanger(newLine, LOGS_Path, lineNo);
+                        logs.AppendText(fileName + " made public succesfully for the user " + clientUsername + '\n');
+                        return (fileName + " made public succesfully.");
+                    }
+                }
+                lineNo++;
+            }
+            logReader.Close();
+            if (!flag)
+            {
+                return ("There is no such a file " + fileName + " belongs to you.\n");
+            }
+            return ("something\n");
+        }
+
+        private static void lineChanger(string newText, string fileName, int line_to_edit)
+        {
+            try
+            {
+                string[] arrLine = File.ReadAllLines(fileName);
+                arrLine[line_to_edit] = newText;
+                File.WriteAllLines(fileName, arrLine);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
 
         private void Form1_FormClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {

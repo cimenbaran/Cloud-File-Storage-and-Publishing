@@ -82,3 +82,12 @@ D:\MUTKU\SABANCI\LECTURE\cs408\project\github\cs408_cloud\client\client\obj\Debu
 D:\MUTKU\SABANCI\LECTURE\cs408\project\github\cs408_cloud\client\client\obj\Debug\client.Form1.resources
 D:\MUTKU\SABANCI\LECTURE\cs408\project\github\cs408_cloud\client\client\obj\Debug\client.Properties.Resources.resources
 D:\MUTKU\SABANCI\LECTURE\cs408\project\github\cs408_cloud\client\client\obj\Debug\client.csproj.GenerateResource.Cache
+C:\Users\kagan\Desktop\cs408_cloud\client\client\bin\Debug\client.exe.config
+C:\Users\kagan\Desktop\cs408_cloud\client\client\obj\Debug\client.exe
+C:\Users\kagan\Desktop\cs408_cloud\client\client\obj\Debug\client.pdb
+C:\Users\kagan\Desktop\cs408_cloud\client\client\obj\Debug\client.csprojResolveAssemblyReference.cache
+C:\Users\kagan\Desktop\cs408_cloud\client\client\obj\Debug\client.Form1.resources
+C:\Users\kagan\Desktop\cs408_cloud\client\client\obj\Debug\client.Properties.Resources.resources
+C:\Users\kagan\Desktop\cs408_cloud\client\client\obj\Debug\client.csproj.GenerateResource.Cache
+C:\Users\kagan\Desktop\cs408_cloud\client\client\bin\Debug\client.exe
+C:\Users\kagan\Desktop\cs408_cloud\client\client\bin\Debug\client.pdb

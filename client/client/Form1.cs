@@ -24,7 +24,7 @@ namespace client
         // -----------------------
         //      Client --> Server
         //      0 -> Sending a file to Server
-        //      1 ->
+        //      1 -> Make file public
         //      2 ->
         //      3 ->
         //      4 -> Downloading file from the Server (Download)
@@ -118,6 +118,8 @@ namespace client
                                 textBox_userName.Enabled = false;
                                 button_download.Enabled = true;
                                 textBox_download.Enabled = true;
+                                textBox_toPublic.Enabled = true;
+                                button_makePublic.Enabled = true;
 
                                 connected = true;
                                 logs.AppendText("Connected to the server!\n");
@@ -184,7 +186,7 @@ namespace client
                     if (receivedInfoHeader[0] == 3) { }
 
                     if (receivedInfoHeader[0] == 4)
-                    {                     
+                    {
 
                         // Receive the incoming File's name and size
                         Byte[] fileProperties = new byte[256]; // First 128 Bytes are for Name, Last 128 for Size
@@ -270,7 +272,7 @@ namespace client
                     int fileNameLength = 128; // FileName
                     string fileLength = File.ReadAllBytes(dialog.FileName).Length.ToString(); // The Data's Length is turned into string 
                                                                                               // to put into a Byte Array with the FileName
-            
+
                     Byte[] filePropertiesBuffer = new Byte[fileProperties]; // Allocate space for FileName and The Data's Length
                     // Copy the FileName and The Data's Length into the filePropertiesBuffer
                     Array.Copy(Encoding.Default.GetBytes(dialog.SafeFileName), filePropertiesBuffer, dialog.SafeFileName.Length);
@@ -328,7 +330,7 @@ namespace client
             // string list = "";
             // list icinde bosluklarla ayrilabilir txt isimleri 
             // bi global list tutulur burda
-            if (filename == "" )
+            if (filename == "")
             {
                 logs.AppendText("Wrong input for downloading... You can only download a file from the list.\n");
             }
@@ -352,7 +354,34 @@ namespace client
                 clientSocket.Send(buffer);
 
             }
-            
+
+        }
+
+        private void button_makePublic_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string fileNameToPublic = textBox_toPublic.Text;
+                Byte[] bufferToPublic = new Byte[128];
+                if (fileNameToPublic == "" || fileNameToPublic.Length >= 128)
+                {
+                    logs.AppendText("Enter a file name less than 64 character");
+                    return;
+                }
+               
+                // Send the 1 byte to inform the server that the client is sending a file
+                Byte[] infoHeader = new Byte[1];
+                infoHeader[0] = 1;
+                clientSocket.Send(infoHeader);
+
+
+                bufferToPublic = Encoding.Default.GetBytes(fileNameToPublic);
+                clientSocket.Send(bufferToPublic);
+            }
+            catch
+            {
+
+            }
         }
     }
 }
