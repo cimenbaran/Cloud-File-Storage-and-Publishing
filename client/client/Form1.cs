@@ -196,11 +196,21 @@ namespace client
 
                         // Take the file size from buffer
                         int fileSize = Int32.Parse(Encoding.Default.GetString(fileProperties.Skip(128).Take(128).ToArray()));
-
+                        string filename_pre = fileName;
                         // Get the file data
                         Byte[] buffer2 = new Byte[fileSize]; // The buffer size is allocated by the file size
                         clientSocket.Receive(buffer2);
-
+                        int count = 1;
+                        if (File.Exists(downloadpath + "/" + fileName))
+                        {
+                            fileName = filename_pre.Split('.')[filename_pre.Split('.').Length - 2] + "(" + count + ")." + filename_pre.Split('.').Last();
+                            while (File.Exists(downloadpath + "/" + fileName))
+                            {
+                                count += 1;
+                                fileName = filename_pre.Split('.')[filename_pre.Split('.').Length - 2] + "(" + count + ")." + filename_pre.Split('.').Last();
+                            }
+                            
+                        }
                         BinaryWriter bWrite = new BinaryWriter(File.Open // using system.I/O
                                         (downloadpath + "/" + fileName, FileMode.Append));
                         bWrite.Write(buffer2);
