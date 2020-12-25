@@ -140,7 +140,7 @@
             // button_download
             // 
             this.button_download.Enabled = false;
-            this.button_download.Location = new System.Drawing.Point(144, 352);
+            this.button_download.Location = new System.Drawing.Point(211, 352);
             this.button_download.Name = "button_download";
             this.button_download.Size = new System.Drawing.Size(75, 23);
             this.button_download.TabIndex = 10;
@@ -151,7 +151,7 @@
             // textBox_download
             // 
             this.textBox_download.Enabled = false;
-            this.textBox_download.Location = new System.Drawing.Point(144, 326);
+            this.textBox_download.Location = new System.Drawing.Point(211, 326);
             this.textBox_download.Name = "textBox_download";
             this.textBox_download.Size = new System.Drawing.Size(75, 20);
             this.textBox_download.TabIndex = 11;
@@ -159,18 +159,18 @@
             // button_list
             // 
             this.button_list.Enabled = false;
-            this.button_list.Location = new System.Drawing.Point(49, 297);
+            this.button_list.Location = new System.Drawing.Point(10, 297);
             this.button_list.Name = "button_list";
-            this.button_list.Size = new System.Drawing.Size(75, 23);
+            this.button_list.Size = new System.Drawing.Size(128, 23);
             this.button_list.TabIndex = 12;
-            this.button_list.Text = "Get List";
+            this.button_list.Text = "Get the Filelist You Own";
             this.button_list.UseVisualStyleBackColor = true;
             this.button_list.Click += new System.EventHandler(this.button_list_Click);
             // 
             // button_makepublic
             // 
             this.button_makepublic.Enabled = false;
-            this.button_makepublic.Location = new System.Drawing.Point(49, 352);
+            this.button_makepublic.Location = new System.Drawing.Point(10, 352);
             this.button_makepublic.Name = "button_makepublic";
             this.button_makepublic.Size = new System.Drawing.Size(75, 23);
             this.button_makepublic.TabIndex = 13;
@@ -181,7 +181,7 @@
             // textBox_toPublic
             // 
             this.textBox_toPublic.Enabled = false;
-            this.textBox_toPublic.Location = new System.Drawing.Point(49, 326);
+            this.textBox_toPublic.Location = new System.Drawing.Point(10, 326);
             this.textBox_toPublic.Name = "textBox_toPublic";
             this.textBox_toPublic.Size = new System.Drawing.Size(75, 20);
             this.textBox_toPublic.TabIndex = 14;
@@ -189,11 +189,11 @@
             // button_publiclist
             // 
             this.button_publiclist.Enabled = false;
-            this.button_publiclist.Location = new System.Drawing.Point(144, 297);
+            this.button_publiclist.Location = new System.Drawing.Point(170, 297);
             this.button_publiclist.Name = "button_publiclist";
-            this.button_publiclist.Size = new System.Drawing.Size(99, 23);
+            this.button_publiclist.Size = new System.Drawing.Size(116, 23);
             this.button_publiclist.TabIndex = 15;
-            this.button_publiclist.Text = "Get Public List";
+            this.button_publiclist.Text = "Get the Public Filelist";
             this.button_publiclist.UseVisualStyleBackColor = true;
             this.button_publiclist.Click += new System.EventHandler(this.button_publiclist_Click);
             // 
