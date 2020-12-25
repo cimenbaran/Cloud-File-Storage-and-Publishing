@@ -81,6 +81,8 @@ namespace client
         {
             // Connecting a Server
 
+
+
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             string IP = textBox_ip.Text;
             int portNum;
