@@ -30,8 +30,8 @@ namespace client
         //      2 ->
         //      3 ->
         //      4 -> Downloading file from the Server (Download)
-        //      5 -> Getting list from Server (Get List)
-        //      6 ->
+        //      5 -> Getting private list from Server (Get Private List)
+        //      6 -> Getting public list from Server (Get Public List)
         //      7 ->
         // -----------------------
         //      Server --> Client
@@ -40,8 +40,8 @@ namespace client
         //      2 ->
         //      3 ->
         //      4 -> Sending file to Client (Download)
-        //      5 -> Sending list as a string (Get List)
-        //      6 ->
+        //      5 -> Sending private files list to Client(Get Private List)
+        //      6 -> Sending public files list to Client(Get Public List)
         //      7 ->
         // -----------------------
         //
@@ -122,7 +122,7 @@ namespace client
                                 button_publiclist.Enabled = true;
 
                                 connected = true;
-                                logs.AppendText("Connected to the server!\n");
+                                logs.AppendText("Connected to the server!\n\n");
                                 uploadFile.Enabled = true;
                                 button_disconnect.Enabled = true;
                                 Thread receiveThread = new Thread(Receive);
@@ -176,7 +176,7 @@ namespace client
                         string incomingMessage = Encoding.Default.GetString(buffer);
                         incomingMessage = incomingMessage.Substring(0, incomingMessage.IndexOf("\0"));
 
-                        logs.AppendText("Server: " + incomingMessage + "\n");
+                        logs.AppendText("Server: " + incomingMessage + "\n\n");
                     }
 
                     if (receivedInfoHeader[0] == 1) { }
@@ -220,7 +220,7 @@ namespace client
                         buffer2 = null; // In order to prevent creating files over and over again
 
                         // Print the logs and send the confirmation message to the Client
-                        logs.AppendText("Downloaded file: \"" + fileName + "\" from: the server." + "\n"); // Log message
+                        logs.AppendText("Downloaded file: \"" + fileName + "\" from: the server." + "\n\n"); // Log message
                     }
 
                     if (receivedInfoHeader[0] == 5)
@@ -239,7 +239,7 @@ namespace client
                             incomingList = incomingList.Substring(0, incomingList.IndexOf("PM") + 2);
                             list.Add(incomingList);
                         }
-                        logs.AppendText("You can download or make public the following files.\n");
+                        logs.AppendText("You can download, delete, copy or make public the following files.\n");
                         for (int i = 0; i < list.Count ; i++)
                         {
                             logs.AppendText(list[i] + "\n");
@@ -264,7 +264,7 @@ namespace client
                             incomingList = incomingList.Substring(0, incomingList.IndexOf("PM") + 2);
                             publiclist.Add(incomingList);
                         }
-                        logs.AppendText("Here is the public files from the server.\n");
+                        logs.AppendText("You can only download the following files that belong to someone else.\n");
                         for (int i = 0; i < publiclist.Count; i++)
                         {
                             logs.AppendText(publiclist[i] + "\n");
@@ -341,13 +341,15 @@ namespace client
 
                     // Send the data to the surver via generalBuffer
                     clientSocket.Send(generalBuffer);
-                    logs.AppendText("Sent file: \"" + dialog.SafeFileName + "\" \n");
+                    logs.AppendText("Sent file: \"" + dialog.SafeFileName + "\" \n\n");
 
                     button_list.Enabled = true;
                     button_download.Enabled = false;
                     textBox_download.Enabled = false;
                     button_makepublic.Enabled = false;
                     textBox_toPublic.Enabled = false;
+                    textBox_download.Text = String.Empty;
+                    textBox_toPublic.Text = String.Empty;
                 }
             }
             catch (Exception ex)
@@ -376,8 +378,16 @@ namespace client
             textBox_userName.Enabled = true;
             textBox_userName.Text = String.Empty;
 
+            textBox_download.Enabled = false;
+            textBox_download.Text = String.Empty;
+            textBox_toPublic.Enabled = false;
+            textBox_toPublic.Text = String.Empty;
+
             uploadFile.Enabled = false;
-            textBox_userName.Enabled = true;
+            button_download.Enabled = false;
+            button_list.Enabled = false;
+            button_makepublic.Enabled = false;
+            button_publiclist.Enabled = false;
 
 
         }
@@ -398,9 +408,16 @@ namespace client
                     flag = true;
                 }
             }
+            for (int i = 0; i < publiclist.Count; i++)
+            {
+                if (filename == publiclist[i].Split('\t')[1])
+                {
+                    flag = true;
+                }
+            }
             if (filename == "" || !flag)
             {
-                logs.AppendText("Wrong input for downloading... You can only download a file from the list.\n");
+                logs.AppendText("Wrong input for downloading... You must enter a filename from the given lists.\n");
             }
             else
             {
@@ -468,6 +485,8 @@ namespace client
         private void button_publiclist_Click(object sender, EventArgs e)
         {
             publiclist.Clear();
+            button_download.Enabled = true;
+            textBox_download.Enabled = true;
             Byte[] infoHeader = new Byte[1];
             infoHeader[0] = 6;
             clientSocket.Send(infoHeader);

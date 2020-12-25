@@ -366,6 +366,8 @@ namespace server
 
                         // Send the data to the surver via generalBuffer
                         thisClient.Send(generalBuffer);
+
+                        logs.AppendText("Client " + clientUsername + " downloaded the file "+filename.Split('_')[1]+".\n");
                     }
 
                     if (receivedInfoHeader[0] == 5)
@@ -381,10 +383,7 @@ namespace server
                         {
                             if (!(line.Split('\t')[0] == clientUsername))
                             {
-                                if (line.Split('\t')[2] == "0")
-                                {
-                                    continue;
-                                }
+                                continue;
                             }
                             fileList.Add(line.Split('\t')[1].Split('_')[1]+ "\t"+line.Split('\t')[3] + "\t" + line.Split('\t')[4]);
                         }
@@ -407,7 +406,8 @@ namespace server
                         thisClient.Send(infoHeader);
 
                         Byte[] buffer_toClient = new Byte[128];
-                        buffer_toClient = Encoding.Default.GetBytes("List of files successfully sent to the you.\n");
+                        logs.AppendText("List of files that the client owns successfully sent to "+clientUsername+".\n");
+                        buffer_toClient = Encoding.Default.GetBytes("List of files that you own successfully sent to the you.");
                         thisClient.Send(buffer_toClient);
                     }
 
@@ -447,7 +447,8 @@ namespace server
                         thisClient.Send(infoHeader);
 
                         Byte[] buffer_toClient = new Byte[128];
-                        buffer_toClient = Encoding.Default.GetBytes("List of public files successfully sent to the you.\n");
+                        logs.AppendText("List of public files successfully sent to " + clientUsername + ".\n");
+                        buffer_toClient = Encoding.Default.GetBytes("List of public files successfully sent to the you.");
                         thisClient.Send(buffer_toClient);
                     }
 
