@@ -39,7 +39,7 @@ namespace server
         //      0 -> Message to Client
         //      1 ->
         //      2 ->
-        //      3 ->
+        //      3 -> Create a on the server (Copy)
         //      4 -> Sending file to Client (Download)
         //      5 -> Sending list as a string (Get List)
         //      6 ->
@@ -260,9 +260,9 @@ namespace server
                         bWrite.Close();
 
                         // Write into LOGS.txt
-                        DateTime localDate = DateTime.Now;
+                        string time = DateTime.Now.ToString("MM/dd/yyyy HH:mm");
                         BinaryWriter bWriteLog = new BinaryWriter(File.Open(LOGS_Path, FileMode.Append));
-                        Byte[] logBuffer = Encoding.Default.GetBytes(clientUsername + "\t" + fileName_basic + "\t" + "0" + "\t"+ fileSize + "bytes" +"\t" + localDate.ToString() + "\n");
+                        Byte[] logBuffer = Encoding.Default.GetBytes(clientUsername + "\t" + fileName_basic + "\t" + "0" + "\t"+ fileSize + "bytes" +"\t" + time + "\n");
                         bWriteLog.Write(logBuffer.ToArray());
                         bWriteLog.Close();
 
@@ -309,7 +309,97 @@ namespace server
 
                     if (receivedInfoHeader[0] == 2) { }
 
-                    if (receivedInfoHeader[0] == 3) { }
+
+                    if (receivedInfoHeader[0] == 3) 
+                    {
+
+                        // Receive the privacy information
+                        Byte[] receivedAccesRightHeader = new Byte[1];
+                        thisClient.Receive(receivedAccesRightHeader);
+
+
+                        // Get the file name from client
+                        Byte[] buffer_filename = new Byte[128];
+                        thisClient.Receive(buffer_filename);
+                        string fileName = Encoding.Default.GetString(buffer_filename);
+
+                        // Format the file name
+                        fileName = fileName.Substring(0, fileName.IndexOf("\0"));
+                        fileName = clientUsername + "_" + fileName;
+                        string fileName_basic = fileName;
+                        string noncopyname = fileName;
+
+                        // Read the LOGS.txt to update new file name 
+                        StreamReader logReader = new StreamReader(LOGS_Path);
+                        string line = "";
+                        bool flag = false;
+                        bool flag2 = false;
+                        int count = 0;
+                        while ((line = logReader.ReadLine()) != null)
+                        {
+                            if (!(line.Split('\t')[0] == clientUsername))
+                                continue;
+                            if (count != 0)
+                            {
+                                fileName = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
+                                flag = true;
+                            }
+                            if (line.Split('\t')[1].Split('_')[0] + "_" + line.Split('\t')[1].Split('_')[1] == fileName)
+                            {
+                                count = count + 1;
+                                flag2 = true;
+                            }
+                        }
+                        if (!flag && flag2)
+                        {
+                            fileName_basic = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
+                        }
+                        if (flag)
+                        {
+                            fileName_basic = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
+                        }
+                        logReader.Close();
+
+                        // fileName_basic is name of the new file 
+                        // noncopyname is the name of the file to be copied
+
+                        try
+                        {
+                            // Will not overwrite if the destination file already exists.
+                            File.Copy(Path.Combine(DB_Path, noncopyname), Path.Combine(DB_Path, fileName_basic));
+
+                            // Access right (public/private) of the original file should also be passed to the new copy 
+                            if (receivedAccesRightHeader[0] == 1)
+                               makePublic(fileName_basic, clientUsername);
+                        
+
+                            // Print the logs and send the confirmation message to the Client
+                            logs.AppendText("Copied file: \"" + noncopyname + "\" from \"" + clientUsername + "\"" + " as " +"\"" + fileName_basic + "\"" + "\n"); // Log message
+                            string receivedFile = " Copied file: \"" + noncopyname + "\" from \"" + clientUsername + "\"" + " as " + "\"" + fileName_basic +  "\" successfully.." + "\n";
+
+
+                            // Write into LOGS.txt
+                            string fileLength = File.ReadAllBytes(DB_Path + "/" + noncopyname).Length.ToString();
+                            string time = DateTime.Now.ToString("MM/dd/yyyy HH:mm");
+
+                            BinaryWriter bWriteLog = new BinaryWriter(File.Open(LOGS_Path, FileMode.Append));
+                            Byte[] logBuffer = Encoding.Default.GetBytes(clientUsername + "\t" + fileName_basic + "\t" + "0" + "\t" + fileLength + "bytes" + "\t" + time + "\n");
+                            bWriteLog.Write(logBuffer.ToArray());
+                            bWriteLog.Close();
+
+                            // Sending the confirmation message to the Client
+                            Byte[] buffer2 = new Byte[64];
+                            buffer2 = Encoding.Default.GetBytes(receivedFile);
+                            thisClient.Send(buffer2);
+                        }
+
+                        // Catch exception if the file was already copied.
+                        catch (IOException copyError)
+                        {
+                            Console.WriteLine(copyError.Message);
+                        }
+
+                    }
 
                     if (receivedInfoHeader[0] == 4)
                     {
