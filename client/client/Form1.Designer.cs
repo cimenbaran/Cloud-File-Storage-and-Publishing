@@ -44,45 +44,52 @@
             this.button_makepublic = new System.Windows.Forms.Button();
             this.textBox_toPublic = new System.Windows.Forms.TextBox();
             this.button_publiclist = new System.Windows.Forms.Button();
+            this.button_copy = new System.Windows.Forms.Button();
+            this.textBox_copy = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(46, 50);
+            this.label1.Location = new System.Drawing.Point(61, 62);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(20, 13);
+            this.label1.Size = new System.Drawing.Size(24, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "IP:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(46, 90);
+            this.label2.Location = new System.Drawing.Point(61, 111);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.Size = new System.Drawing.Size(38, 17);
             this.label2.TabIndex = 8;
             this.label2.Text = "Port:";
             // 
             // textBox_ip
             // 
-            this.textBox_ip.Location = new System.Drawing.Point(112, 47);
+            this.textBox_ip.Location = new System.Drawing.Point(149, 58);
+            this.textBox_ip.Margin = new System.Windows.Forms.Padding(4);
             this.textBox_ip.Name = "textBox_ip";
-            this.textBox_ip.Size = new System.Drawing.Size(100, 20);
+            this.textBox_ip.Size = new System.Drawing.Size(132, 22);
             this.textBox_ip.TabIndex = 1;
             // 
             // textBox_port
             // 
-            this.textBox_port.Location = new System.Drawing.Point(112, 83);
+            this.textBox_port.Location = new System.Drawing.Point(149, 102);
+            this.textBox_port.Margin = new System.Windows.Forms.Padding(4);
             this.textBox_port.Name = "textBox_port";
-            this.textBox_port.Size = new System.Drawing.Size(100, 20);
+            this.textBox_port.Size = new System.Drawing.Size(132, 22);
             this.textBox_port.TabIndex = 2;
             // 
             // button_connect
             // 
-            this.button_connect.Location = new System.Drawing.Point(112, 153);
+            this.button_connect.Location = new System.Drawing.Point(149, 188);
+            this.button_connect.Margin = new System.Windows.Forms.Padding(4);
             this.button_connect.Name = "button_connect";
-            this.button_connect.Size = new System.Drawing.Size(75, 23);
+            this.button_connect.Size = new System.Drawing.Size(100, 28);
             this.button_connect.TabIndex = 4;
             this.button_connect.Text = "Connect";
             this.button_connect.UseVisualStyleBackColor = true;
@@ -90,36 +97,39 @@
             // 
             // logs
             // 
-            this.logs.Location = new System.Drawing.Point(305, 47);
+            this.logs.Location = new System.Drawing.Point(407, 58);
+            this.logs.Margin = new System.Windows.Forms.Padding(4);
             this.logs.Name = "logs";
             this.logs.ReadOnly = true;
-            this.logs.Size = new System.Drawing.Size(450, 328);
+            this.logs.Size = new System.Drawing.Size(599, 403);
             this.logs.TabIndex = 6;
             this.logs.Text = "";
             // 
             // textBox_userName
             // 
-            this.textBox_userName.Location = new System.Drawing.Point(112, 118);
+            this.textBox_userName.Location = new System.Drawing.Point(149, 145);
+            this.textBox_userName.Margin = new System.Windows.Forms.Padding(4);
             this.textBox_userName.Name = "textBox_userName";
-            this.textBox_userName.Size = new System.Drawing.Size(100, 20);
+            this.textBox_userName.Size = new System.Drawing.Size(132, 22);
             this.textBox_userName.TabIndex = 3;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(46, 121);
+            this.label4.Location = new System.Drawing.Point(61, 149);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(58, 13);
+            this.label4.Size = new System.Drawing.Size(77, 17);
             this.label4.TabIndex = 7;
             this.label4.Text = "Username:";
             // 
             // uploadFile
             // 
             this.uploadFile.Enabled = false;
-            this.uploadFile.Location = new System.Drawing.Point(109, 229);
-            this.uploadFile.Margin = new System.Windows.Forms.Padding(2);
+            this.uploadFile.Location = new System.Drawing.Point(145, 282);
+            this.uploadFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.uploadFile.Name = "uploadFile";
-            this.uploadFile.Size = new System.Drawing.Size(110, 23);
+            this.uploadFile.Size = new System.Drawing.Size(147, 28);
             this.uploadFile.TabIndex = 5;
             this.uploadFile.Text = "Upload File";
             this.uploadFile.UseVisualStyleBackColor = true;
@@ -128,10 +138,10 @@
             // button_disconnect
             // 
             this.button_disconnect.Enabled = false;
-            this.button_disconnect.Location = new System.Drawing.Point(114, 188);
-            this.button_disconnect.Margin = new System.Windows.Forms.Padding(2);
+            this.button_disconnect.Location = new System.Drawing.Point(152, 231);
+            this.button_disconnect.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_disconnect.Name = "button_disconnect";
-            this.button_disconnect.Size = new System.Drawing.Size(72, 22);
+            this.button_disconnect.Size = new System.Drawing.Size(96, 27);
             this.button_disconnect.TabIndex = 9;
             this.button_disconnect.Text = "Disconnect";
             this.button_disconnect.UseVisualStyleBackColor = true;
@@ -140,9 +150,10 @@
             // button_download
             // 
             this.button_download.Enabled = false;
-            this.button_download.Location = new System.Drawing.Point(211, 352);
+            this.button_download.Location = new System.Drawing.Point(281, 433);
+            this.button_download.Margin = new System.Windows.Forms.Padding(4);
             this.button_download.Name = "button_download";
-            this.button_download.Size = new System.Drawing.Size(75, 23);
+            this.button_download.Size = new System.Drawing.Size(100, 28);
             this.button_download.TabIndex = 10;
             this.button_download.Text = "Download";
             this.button_download.UseVisualStyleBackColor = true;
@@ -151,17 +162,19 @@
             // textBox_download
             // 
             this.textBox_download.Enabled = false;
-            this.textBox_download.Location = new System.Drawing.Point(211, 326);
+            this.textBox_download.Location = new System.Drawing.Point(281, 401);
+            this.textBox_download.Margin = new System.Windows.Forms.Padding(4);
             this.textBox_download.Name = "textBox_download";
-            this.textBox_download.Size = new System.Drawing.Size(75, 20);
+            this.textBox_download.Size = new System.Drawing.Size(99, 22);
             this.textBox_download.TabIndex = 11;
             // 
             // button_list
             // 
             this.button_list.Enabled = false;
-            this.button_list.Location = new System.Drawing.Point(10, 297);
+            this.button_list.Location = new System.Drawing.Point(13, 366);
+            this.button_list.Margin = new System.Windows.Forms.Padding(4);
             this.button_list.Name = "button_list";
-            this.button_list.Size = new System.Drawing.Size(128, 23);
+            this.button_list.Size = new System.Drawing.Size(171, 28);
             this.button_list.TabIndex = 12;
             this.button_list.Text = "Get the Filelist You Own";
             this.button_list.UseVisualStyleBackColor = true;
@@ -170,9 +183,10 @@
             // button_makepublic
             // 
             this.button_makepublic.Enabled = false;
-            this.button_makepublic.Location = new System.Drawing.Point(10, 352);
+            this.button_makepublic.Location = new System.Drawing.Point(13, 433);
+            this.button_makepublic.Margin = new System.Windows.Forms.Padding(4);
             this.button_makepublic.Name = "button_makepublic";
-            this.button_makepublic.Size = new System.Drawing.Size(75, 23);
+            this.button_makepublic.Size = new System.Drawing.Size(100, 28);
             this.button_makepublic.TabIndex = 13;
             this.button_makepublic.Text = "Make Public";
             this.button_makepublic.UseVisualStyleBackColor = true;
@@ -181,27 +195,50 @@
             // textBox_toPublic
             // 
             this.textBox_toPublic.Enabled = false;
-            this.textBox_toPublic.Location = new System.Drawing.Point(10, 326);
+            this.textBox_toPublic.Location = new System.Drawing.Point(13, 401);
+            this.textBox_toPublic.Margin = new System.Windows.Forms.Padding(4);
             this.textBox_toPublic.Name = "textBox_toPublic";
-            this.textBox_toPublic.Size = new System.Drawing.Size(75, 20);
+            this.textBox_toPublic.Size = new System.Drawing.Size(99, 22);
             this.textBox_toPublic.TabIndex = 14;
             // 
             // button_publiclist
             // 
             this.button_publiclist.Enabled = false;
-            this.button_publiclist.Location = new System.Drawing.Point(170, 297);
+            this.button_publiclist.Location = new System.Drawing.Point(227, 366);
+            this.button_publiclist.Margin = new System.Windows.Forms.Padding(4);
             this.button_publiclist.Name = "button_publiclist";
-            this.button_publiclist.Size = new System.Drawing.Size(116, 23);
+            this.button_publiclist.Size = new System.Drawing.Size(155, 28);
             this.button_publiclist.TabIndex = 15;
             this.button_publiclist.Text = "Get the Public Filelist";
             this.button_publiclist.UseVisualStyleBackColor = true;
             this.button_publiclist.Click += new System.EventHandler(this.button_publiclist_Click);
             // 
+            // button_copy
+            // 
+            this.button_copy.Enabled = false;
+            this.button_copy.Location = new System.Drawing.Point(120, 434);
+            this.button_copy.Name = "button_copy";
+            this.button_copy.Size = new System.Drawing.Size(86, 27);
+            this.button_copy.TabIndex = 16;
+            this.button_copy.Text = "Copy a file";
+            this.button_copy.UseVisualStyleBackColor = true;
+            this.button_copy.Click += new System.EventHandler(this.button_copy_Click);
+            // 
+            // textBox_copy
+            // 
+            this.textBox_copy.Enabled = false;
+            this.textBox_copy.Location = new System.Drawing.Point(120, 401);
+            this.textBox_copy.Name = "textBox_copy";
+            this.textBox_copy.Size = new System.Drawing.Size(87, 22);
+            this.textBox_copy.TabIndex = 0;
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(823, 391);
+            this.ClientSize = new System.Drawing.Size(1097, 481);
+            this.Controls.Add(this.textBox_copy);
+            this.Controls.Add(this.button_copy);
             this.Controls.Add(this.button_publiclist);
             this.Controls.Add(this.textBox_toPublic);
             this.Controls.Add(this.button_makepublic);
@@ -218,6 +255,7 @@
             this.Controls.Add(this.textBox_ip);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -243,6 +281,8 @@
         private System.Windows.Forms.Button button_makepublic;
         private System.Windows.Forms.TextBox textBox_toPublic;
         private System.Windows.Forms.Button button_publiclist;
+        private System.Windows.Forms.Button button_copy;
+        private System.Windows.Forms.TextBox textBox_copy;
     }
 }
 
