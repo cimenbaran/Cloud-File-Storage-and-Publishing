@@ -92,3 +92,12 @@ C:\Users\Işıl\Desktop\sondeneme\cs408_cloud\client\client\obj\Debug\client.csp
 C:\Users\Işıl\Desktop\sondeneme\cs408_cloud\client\client\obj\Debug\client.csproj.CoreCompileInputs.cache
 C:\Users\Işıl\Desktop\sondeneme\cs408_cloud\client\client\obj\Debug\client.exe
 C:\Users\Işıl\Desktop\sondeneme\cs408_cloud\client\client\obj\Debug\client.pdb
+D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\client\client\bin\Debug\client.exe.config
+D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\client\client\obj\Debug\client.exe
+D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\client\client\obj\Debug\client.pdb
+D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\client\client\bin\Debug\client.exe
+D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\client\client\bin\Debug\client.pdb
+D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\client\client\obj\Debug\client.csprojResolveAssemblyReference.cache
+D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\client\client\obj\Debug\client.Form1.resources
+D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\client\client\obj\Debug\client.Properties.Resources.resources
+D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\client\client\obj\Debug\client.csproj.GenerateResource.Cache

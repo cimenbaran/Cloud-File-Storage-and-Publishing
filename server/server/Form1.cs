@@ -414,7 +414,6 @@ namespace server
                         string filename = Encoding.Default.GetString(buffer_filename);
                         filename = filename.Substring(0, filename.IndexOf("\0"));
                         
-                        filename = clientUsername + "_" + filename;
                         if (!File.Exists(DB_Path + "/" + filename))
                         {
                             StreamReader logReader = new StreamReader(LOGS_Path);

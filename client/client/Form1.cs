@@ -21,6 +21,7 @@ namespace client
         string downloadpath = "";
         List<String> list = new List<String>();
         List<String> publiclist = new List<String>();
+        string username = "";
         string copypath = "";
 
         // The headers explanation
@@ -88,7 +89,7 @@ namespace client
             string IP = textBox_ip.Text;
             int portNum;
             string userName = textBox_userName.Text;
-
+            username = userName;
 
             if (Int32.TryParse(textBox_port.Text, out portNum))
             {
@@ -248,13 +249,17 @@ namespace client
                             clientSocket.Receive(buffer);
                             string incomingList = Encoding.Default.GetString(buffer);
                             incomingList = incomingList.Substring(0, incomingList.IndexOf("\0"));
+                            string deneme = incomingList;
+                            incomingList = deneme.Split('\t')[0];
+                            incomingList += '\t' + deneme.Split('\t')[1];
+                            incomingList += '\t' + deneme.Split('\t')[2].Substring(0, 16);
 
                             list.Add(incomingList);
                         }
                         logs.AppendText("You can download, delete, copy or make public the following files.\n");
                         for (int i = 0; i < list.Count ; i++)
                         {
-                            logs.AppendText(list[i] + "\n");
+                            logs.AppendText((i + 1).ToString() + ". " + list[i] + "\n");
                         }
 
                         
@@ -273,13 +278,18 @@ namespace client
                             clientSocket.Receive(buffer);
                             string incomingList = Encoding.Default.GetString(buffer);
                             incomingList = incomingList.Substring(0, incomingList.IndexOf("\0"));
+                            string deneme = incomingList;
+                            incomingList = deneme.Split('\t')[0];
+                            incomingList += '\t' + deneme.Split('\t')[1];
+                            incomingList += '\t' + deneme.Split('\t')[2];
+                            incomingList += '\t' + deneme.Split('\t')[3].Substring(0, 16);
 
                             publiclist.Add(incomingList);
                         }
                         logs.AppendText("You can only download the following files that belong to someone else.\n");
                         for (int i = 0; i < publiclist.Count; i++)
                         {
-                            logs.AppendText(publiclist[i] + "\n");
+                            logs.AppendText((i+1).ToString()+ ". "+publiclist[i] + "\n");
                         }
                     }
 
@@ -427,13 +437,20 @@ namespace client
                 if (filename == list[i].Split('\t')[0])
                 {
                     flag = true;
+                    filename = username + "_" + filename;
+                    break;
                 }
             }
-            for (int i = 0; i < publiclist.Count; i++)
+            if (!flag)
             {
-                if (filename == publiclist[i].Split('\t')[1])
+                for (int i = 0; i < publiclist.Count; i++)
                 {
-                    flag = true;
+                    if (filename == publiclist[i].Split('\t')[1])
+                    {
+                        flag = true;
+                        filename = publiclist[i].Split('\t')[0] + "_" + filename;
+                        break;
+                    }
                 }
             }
             if (filename == "" || !flag)
