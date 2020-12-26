@@ -21,6 +21,7 @@ namespace client
         string downloadpath = "";
         List<String> list = new List<String>();
         List<String> publiclist = new List<String>();
+        string copypath = "";
 
         // The headers explanation
         // -----------------------
@@ -80,6 +81,8 @@ namespace client
         private void button_connect_Click(object sender, EventArgs e)
         {
             // Connecting a Server
+
+
 
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             string IP = textBox_ip.Text;
@@ -183,7 +186,16 @@ namespace client
 
                     if (receivedInfoHeader[0] == 2) { }
 
-                    if (receivedInfoHeader[0] == 3) { }
+                    if (receivedInfoHeader[0] == 3)
+                    {
+                        Byte[] buffer = new Byte[64];
+                        clientSocket.Receive(buffer);
+
+                        string incomingMessage = Encoding.Default.GetString(buffer);
+                        incomingMessage = incomingMessage.Substring(0, incomingMessage.IndexOf("\0"));
+
+                        logs.AppendText("Server: " + incomingMessage + "\n\n");
+                    }
 
                     if (receivedInfoHeader[0] == 4)
                     {                     
@@ -236,7 +248,7 @@ namespace client
                             clientSocket.Receive(buffer);
                             string incomingList = Encoding.Default.GetString(buffer);
                             incomingList = incomingList.Substring(0, incomingList.IndexOf("\0"));
-                            incomingList = incomingList.Substring(0, incomingList.IndexOf("PM") + 2);
+
                             list.Add(incomingList);
                         }
                         logs.AppendText("You can download, delete, copy or make public the following files.\n");
@@ -261,7 +273,7 @@ namespace client
                             clientSocket.Receive(buffer);
                             string incomingList = Encoding.Default.GetString(buffer);
                             incomingList = incomingList.Substring(0, incomingList.IndexOf("\0"));
-                            incomingList = incomingList.Substring(0, incomingList.IndexOf("PM") + 2);
+
                             publiclist.Add(incomingList);
                         }
                         logs.AppendText("You can only download the following files that belong to someone else.\n");
@@ -285,6 +297,8 @@ namespace client
                         textBox_userName.Enabled = true;
                         button_download.Enabled = false;
                         textBox_download.Enabled = false;
+                        button_copy.Enabled = false;
+                        textBox_copy.Enabled = false;
 
                     }
 
@@ -345,11 +359,14 @@ namespace client
 
                     button_list.Enabled = true;
                     button_download.Enabled = false;
+                    button_copy.Enabled = false;
                     textBox_download.Enabled = false;
                     button_makepublic.Enabled = false;
                     textBox_toPublic.Enabled = false;
+                    textBox_copy.Enabled = false;
                     textBox_download.Text = String.Empty;
                     textBox_toPublic.Text = String.Empty;
+                    textBox_copy.Text = String.Empty;
                 }
             }
             catch (Exception ex)
@@ -388,6 +405,10 @@ namespace client
             button_list.Enabled = false;
             button_makepublic.Enabled = false;
             button_publiclist.Enabled = false;
+
+            button_copy.Enabled = false;
+            textBox_copy.Text = String.Empty;
+            textBox_copy.Enabled = false;
 
 
         }
@@ -437,6 +458,7 @@ namespace client
                 Byte[] buffer = new Byte[128];
                 buffer = Encoding.Default.GetBytes(filename);
                 clientSocket.Send(buffer);
+                textBox_download.Clear();
 
             }
             
@@ -449,6 +471,9 @@ namespace client
             textBox_toPublic.Enabled = true;
             button_download.Enabled = true;
             textBox_download.Enabled = true;
+            button_copy.Enabled = true;
+            textBox_copy.Enabled = true;
+
             Byte[] infoHeader = new Byte[1];
             infoHeader[0] = 5;
             clientSocket.Send(infoHeader);
@@ -474,6 +499,7 @@ namespace client
 
                 bufferToPublic = Encoding.Default.GetBytes(fileNameToPublic);
                 clientSocket.Send(bufferToPublic);
+                textBox_toPublic.Clear();
                 
             }
             catch
@@ -487,9 +513,89 @@ namespace client
             publiclist.Clear();
             button_download.Enabled = true;
             textBox_download.Enabled = true;
+
+
             Byte[] infoHeader = new Byte[1];
             infoHeader[0] = 6;
             clientSocket.Send(infoHeader);
+        }
+
+        private void button_copy_Click(object sender, EventArgs e)
+        {
+            string filename = textBox_copy.Text;
+
+            bool flag = false;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (filename == list[i].Split('\t')[0])
+                {
+                    flag = true;
+                }
+            }
+
+            // Check if the file is public - if public make the copy public too
+            bool isPublic = false;
+            for (int i = 0; i < publiclist.Count; i++)
+            {
+                if (filename == publiclist[i].Split('\t')[1])
+                {
+                    isPublic = true;
+                }
+            }
+
+            if (filename == "" || !flag )
+            {
+                logs.AppendText("Wrong input for copying... You can only copy a file from the list.\n");
+                textBox_copy.Clear();
+            }
+            else
+            {
+                Byte[] infoHeader = new Byte[1];
+                infoHeader[0] = 3;
+                clientSocket.Send(infoHeader);
+
+                // Send 1 if the file is public otherwise send 0
+                Byte[] accesRightHeader = new Byte[1];
+                if (isPublic)
+                    accesRightHeader[0] = 1;
+                else
+                    accesRightHeader[0] = 0;
+
+                clientSocket.Send(accesRightHeader);
+
+
+                Byte[] buffer = new Byte[128];
+                buffer = Encoding.Default.GetBytes(filename);
+                clientSocket.Send(buffer);
+                textBox_copy.Clear();
+
+                try
+                { 
+                    Byte[] buffer2 = new Byte[128];
+                    clientSocket.Receive(buffer2);
+
+                    string incomingMessage = Encoding.Default.GetString(buffer2);
+                    incomingMessage = incomingMessage.Substring(0, incomingMessage.IndexOf("\0"));
+
+                    logs.AppendText("Server: " + incomingMessage + "\n\n");
+
+                    button_copy.Enabled = false;
+                    textBox_copy.Enabled = false;
+                    button_download.Enabled = false;
+                    textBox_download.Enabled = false;
+                    button_makepublic.Enabled = false;
+                    textBox_toPublic.Enabled = false;
+
+
+                }
+                catch
+                {
+                    logs.AppendText("Server: coppy error \n\n");
+                }
+            }
+
+            
+
         }
     }
 }

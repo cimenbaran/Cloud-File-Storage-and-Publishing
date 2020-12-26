@@ -565,7 +565,9 @@ namespace server
                     logs.AppendText("You choosed: " + DB_Path + " as db path.\n");
                     logs.AppendText("LOGS path is: " + LOGS_Path + "\n");
                 }
+
             }
+
 
         }
     }
