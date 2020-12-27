@@ -218,40 +218,63 @@ namespace server
 
 
                         // Read the LOGS.txt file to determine the final file name
-                        StreamReader logReader = new StreamReader(LOGS_Path);
-                        string line = "";
-                        bool flag = false;
-                        bool flag2 = false;
-                        int count = 0;
-                        while ((line = logReader.ReadLine()) != null)
+                        //StreamReader logReader = new StreamReader(LOGS_Path);
+                        //string line = "";
+                        int denemecount = 0;
+                        bool deneme = false;
+                        while (!deneme)
                         {
-                            if (!(line.Split('\t')[0] == clientUsername))
-                                continue;
-
-                            if (count != 0)
+                            if (File.Exists(DB_Path + "/" + fileName_basic))
                             {
-                                fileName = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
-                                flag = true;
+                                denemecount++;
+                                fileName_basic = fileName.Split('_')[0] + "_" + fileName.Split('_')[1].Split('.')[0] + "(" + denemecount.ToString() + ")" + ".txt";
                             }
-
-                            if (line.Split('\t')[1].Split('_')[0] + "_" + line.Split('\t')[1].Split('_')[1] == fileName)
+                            else
                             {
-
-                                count = count + 1;
-                                flag2 = true;
+                                deneme = true;
                             }
                         }
+                        //if (!File.Exists(DB_Path + "/" + fileName_basic))
+                        //{
+
+                        //}
+                        //else
+                        //{
+                        //    bool flag = false;
+                        //    bool flag2 = false;
+                        //    int count = 0;
+                        //    while ((line = logReader.ReadLine()) != null)
+                        //    {
+                        //        if (!(line.Split('\t')[0] == clientUsername))
+                        //            continue;
+                        //        if (!(line.Split('\t')[2] == "2"))
+                        //            continue;
+
+                        //        if (count != 0)
+                        //        {
+                        //            fileName = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
+                        //            flag = true;
+                        //        }
+
+                        //        if (line.Split('\t')[1].Split('_')[0] + "_" + line.Split('\t')[1].Split('_')[1] == fileName)
+                        //        {
+
+                        //            count = count + 1;
+                        //            flag2 = true;
+                        //        }
+                        //    }
 
 
-                        if (!flag && flag2)
-                        {
-                            fileName_basic = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
-                        }
-                        if (flag)
-                        {
-                            fileName_basic = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
-                        }
-                        logReader.Close();
+                        //    if (!flag && flag2)
+                        //    {
+                        //        fileName_basic = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
+                        //    }
+                        //    if (flag)
+                        //    {
+                        //        fileName_basic = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
+                        //    }
+                        //}
+                        //logReader.Close();
 
                         // Create the file and write into it
                         BinaryWriter bWrite = new BinaryWriter(File.Open // using system.I/O
@@ -417,36 +440,52 @@ namespace server
                         string fileName_basic = fileName;
                         string noncopyname = fileName;
 
-                        // Read the LOGS.txt to update new file name 
-                        StreamReader logReader = new StreamReader(LOGS_Path);
-                        string line = "";
-                        bool flag = false;
-                        bool flag2 = false;
-                        int count = 0;
-                        while ((line = logReader.ReadLine()) != null)
+                        // yeni update file isim belirleme kismi fileName_basic yeni isim oluyor
+                        int denemecount = 0;
+                        bool deneme = false;
+                        while (!deneme)
                         {
-                            if (!(line.Split('\t')[0] == clientUsername))
-                                continue;
-                            if (count != 0)
+                            if (File.Exists(DB_Path + "/" + fileName_basic))
                             {
-                                fileName = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
-                                flag = true;
+                                denemecount++;
+                                fileName_basic = fileName.Split('_')[0] + "_" + fileName.Split('_')[1].Split('.')[0] + "(" + denemecount.ToString() + ")" + ".txt";
                             }
-                            if (line.Split('\t')[1].Split('_')[0] + "_" + line.Split('\t')[1].Split('_')[1] == fileName)
+                            else
                             {
-                                count = count + 1;
-                                flag2 = true;
+                                deneme = true;
                             }
                         }
-                        if (!flag && flag2)
-                        {
-                            fileName_basic = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
-                        }
-                        if (flag)
-                        {
-                            fileName_basic = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
-                        }
-                        logReader.Close();
+
+                        //// Read the LOGS.txt to update new file name 
+                        //StreamReader logReader = new StreamReader(LOGS_Path);
+                        //string line = "";
+                        //bool flag = false;
+                        //bool flag2 = false;
+                        //int count = 0;
+                        //while ((line = logReader.ReadLine()) != null)
+                        //{
+                        //    if (!(line.Split('\t')[0] == clientUsername))
+                        //        continue;
+                        //    if (count != 0)
+                        //    {
+                        //        fileName = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
+                        //        flag = true;
+                        //    }
+                        //    if (line.Split('\t')[1].Split('_')[0] + "_" + line.Split('\t')[1].Split('_')[1] == fileName)
+                        //    {
+                        //        count = count + 1;
+                        //        flag2 = true;
+                        //    }
+                        //}
+                        //if (!flag && flag2)
+                        //{
+                        //    fileName_basic = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
+                        //}
+                        //if (flag)
+                        //{
+                        //    fileName_basic = fileName_basic.Split('.')[fileName_basic.Split('.').Length - 2] + "(" + count.ToString() + ")." + fileName_basic.Split('.').Last();
+                        //}
+                        //logReader.Close();
 
                         // fileName_basic is name of the new file 
                         // noncopyname is the name of the file to be copied
@@ -508,7 +547,8 @@ namespace server
                             string line = "";
                             while ((line = logReader.ReadLine()) != null)
                             {
-                                if (line.Split('\t')[2] == "0")
+                                
+                                if (line.Split('\t')[2] == "0" || line.Split('\t')[2] == "2")
                                 {
                                     continue;
                                 }
@@ -558,7 +598,7 @@ namespace server
                         List<String> fileList = new List<String>();
                         while ((line = logReader.ReadLine()) != null)
                         {
-                            if (!(line.Split('\t')[0] == clientUsername))
+                            if (!(line.Split('\t')[0] == clientUsername) || line.Split('\t')[2] == "2")
                             {
                                 continue;
                             }
@@ -599,7 +639,7 @@ namespace server
                         List<String> fileList = new List<String>();
                         while ((line = logReader.ReadLine()) != null)
                         {
-                            if (line.Split('\t')[2] == "0")
+                            if (line.Split('\t')[2] == "0" || line.Split('\t')[2] == "2")
                             {
                                 continue;
                             }
@@ -674,6 +714,11 @@ namespace server
                     {
                         logReader.Close();
                         return ("The file " + fileName + " is already public.");
+                    }
+                    else if (line.Split('\t')[2] == "2")
+                    {
+                        logReader.Close();
+                        return ("The file " + fileName + " was deleted.");
                     }
                     else
                     {
