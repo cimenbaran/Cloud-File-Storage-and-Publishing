@@ -100,3 +100,13 @@ D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\server\server\o
 D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\server\server\obj\Debug\server.Form1.resources
 D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\server\server\obj\Debug\server.Properties.Resources.resources
 D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\server\server\obj\Debug\server.csproj.GenerateResource.Cache
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\server\server\bin\Debug\server.exe.config
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\server\server\bin\Debug\server.exe
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\server\server\bin\Debug\server.pdb
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\server\server\obj\Debug\server.csprojAssemblyReference.cache
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\server\server\obj\Debug\server.Form1.resources
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\server\server\obj\Debug\server.Properties.Resources.resources
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\server\server\obj\Debug\server.csproj.GenerateResource.cache
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\server\server\obj\Debug\server.csproj.CoreCompileInputs.cache
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\server\server\obj\Debug\server.exe
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\server\server\obj\Debug\server.pdb
