@@ -101,3 +101,13 @@ D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\client\client\o
 D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\client\client\obj\Debug\client.Form1.resources
 D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\client\client\obj\Debug\client.Properties.Resources.resources
 D:\MUTKU\SABANCI\LECTURE\cs408\project\github\deneme\cs408_cloud\client\client\obj\Debug\client.csproj.GenerateResource.Cache
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\bin\Debug\client.exe.config
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\bin\Debug\client.exe
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\bin\Debug\client.pdb
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\obj\Debug\client.csprojAssemblyReference.cache
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\obj\Debug\client.Form1.resources
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\obj\Debug\client.Properties.Resources.resources
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\obj\Debug\client.csproj.GenerateResource.cache
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\obj\Debug\client.csproj.CoreCompileInputs.cache
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\obj\Debug\client.exe
+C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\obj\Debug\client.pdb

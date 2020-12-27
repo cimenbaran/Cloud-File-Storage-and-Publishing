@@ -29,7 +29,7 @@ namespace client
         //      Client --> Server
         //      0 -> Sending a file to Server
         //      1 -> Make file public
-        //      2 ->
+        //      2 -> Delete File
         //      3 ->
         //      4 -> Downloading file from the Server (Download)
         //      5 -> Getting private list from Server (Get Private List)
@@ -370,13 +370,16 @@ namespace client
                     button_list.Enabled = true;
                     button_download.Enabled = false;
                     button_copy.Enabled = false;
+                    button_deleteFile.Enabled = false;
                     textBox_download.Enabled = false;
                     button_makepublic.Enabled = false;
                     textBox_toPublic.Enabled = false;
                     textBox_copy.Enabled = false;
+                    textBox_deleteFile.Enabled = false;
                     textBox_download.Text = String.Empty;
                     textBox_toPublic.Text = String.Empty;
                     textBox_copy.Text = String.Empty;
+                    textBox_deleteFile.Text = String.Empty;
                 }
             }
             catch (Exception ex)
@@ -420,6 +423,9 @@ namespace client
             textBox_copy.Text = String.Empty;
             textBox_copy.Enabled = false;
 
+            button_deleteFile.Enabled = false;
+            textBox_deleteFile.Text = String.Empty;
+            textBox_deleteFile.Enabled = false;
 
         }
 
@@ -490,6 +496,8 @@ namespace client
             textBox_download.Enabled = true;
             button_copy.Enabled = true;
             textBox_copy.Enabled = true;
+            textBox_deleteFile.Enabled = true;
+            button_deleteFile.Enabled = true;
 
             Byte[] infoHeader = new Byte[1];
             infoHeader[0] = 5;
@@ -602,6 +610,8 @@ namespace client
                     textBox_download.Enabled = false;
                     button_makepublic.Enabled = false;
                     textBox_toPublic.Enabled = false;
+                    textBox_deleteFile.Enabled = false;
+                    button_deleteFile.Enabled = false;
 
 
                 }
@@ -613,6 +623,41 @@ namespace client
 
             
 
+        }
+
+        private void button_deleteFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string filename = textBox_deleteFile.Text;
+                bool flag = false;
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (filename == list[i].Split('\t')[0])
+                    {
+                        flag = true;
+                    }
+                }
+                if (filename == "" || !flag)
+                {
+                    logs.AppendText("Wrong input for downloading... You can only download a file from the list.\n");
+                }
+                else
+                {
+                    Byte[] infoHeader = new Byte[1];
+                    infoHeader[0] = 2;//the message(we want to delete a file) has sent to the server
+                    clientSocket.Send(infoHeader);
+
+                    Byte[] toBeDeleted = new byte[128];// now we are sending the filename to be deleted to our server
+                    string toBeDeletedstring = textBox_deleteFile.Text;
+                    toBeDeleted = Encoding.Default.GetBytes(toBeDeletedstring);
+                    clientSocket.Send(toBeDeleted);
+                }
+            }
+            catch
+            {
+
+            }
         }
     }
 }

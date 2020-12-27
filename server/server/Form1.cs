@@ -28,7 +28,7 @@ namespace server
         //      Client --> Server
         //      0 -> Sending a file to Server
         //      1 ->
-        //      2 ->
+        //      2 -> Delete file
         //      3 ->
         //      4 -> Downloading file from the Server (Download)
         //      5 -> Getting list from Server (Get List)
@@ -307,7 +307,95 @@ namespace server
                         }
                     }
 
-                    if (receivedInfoHeader[0] == 2) { }
+                    if (receivedInfoHeader[0] == 2)//message is to delete file
+                    {
+                        //receive the name of file to be deleted from client
+                        Byte[] buffer_delete = new byte[64];
+                        thisClient.Receive(buffer_delete);
+
+                        // Take the file name from the buffer
+                        string filename = Encoding.Default.GetString(buffer_delete);
+
+                        filename = filename.Substring(0, filename.IndexOf("\0"));
+                        string rawfilename = filename;
+                        filename = clientUsername + "_" + filename;
+
+                        File.Delete(Path.Combine(DB_Path, filename));//deleting the file
+
+                        StreamReader logReader = new StreamReader(LOGS_Path);
+                        string line = "";
+                        bool flag = false;
+                        int lineNo = 0;
+                        //bool flag2 = false;
+                        while ((line = logReader.ReadLine()) != null)
+                        {
+                            if (!(line.Split('\t')[0] == clientUsername))
+                            {
+                                lineNo++;
+                                continue;
+                            }
+                            string lineFileName = "";
+                            lineFileName = line.Split('\t')[1];
+                            lineFileName = lineFileName.Substring(lineFileName.IndexOf("_") + 1);
+                            //logs.AppendText("@" + lineFileName + "@" + fileName + "@\n");
+                            string linedaki = lineFileName.Trim();
+
+                            if (lineFileName.Trim() == rawfilename)
+                            {
+                                //logs.AppendText(lineNo + "file bulundu\n");
+                                flag = true;
+
+                                if (line.Split('\t')[2] == "2")
+                                {
+
+                                    logReader.Close();
+                                    // message sent to client
+                                    Byte[] infoHeader = new Byte[1];
+                                    infoHeader[0] = 0;
+                                    thisClient.Send(infoHeader);
+
+                                    string deleteMessage = "The file \"" + rawfilename + "\" is already deleted!";
+                                    Byte[] buffer_toClient = new Byte[128];
+                                    buffer_toClient = Encoding.Default.GetBytes(deleteMessage);
+                                    thisClient.Send(buffer_toClient);
+
+                                    break;
+                                }
+                                else
+                                {
+                                    logReader.Close();
+                                    string newLine = line.Split('\t')[0] + '\t' + line.Split('\t')[1] + '\t' + "2\t" + line.Split('\t')[3] + '\t' + line.Split('\t')[4];
+                                    lineChanger(newLine, LOGS_Path, lineNo);
+                                    logs.AppendText(rawfilename + " is deleted by "+ clientUsername + '\n');
+
+                                    // message sent to client
+                                    Byte[] infoHeader = new Byte[1];
+                                    infoHeader[0] = 0;
+                                    thisClient.Send(infoHeader);
+
+                                    string deleteMessage = "The file \"" + rawfilename + "\" is deleted succesfully!";
+                                    Byte[] buffer_toClient = new Byte[128];
+                                    buffer_toClient = Encoding.Default.GetBytes(deleteMessage);
+                                    thisClient.Send(buffer_toClient);
+                                    break;
+                                }
+                            }
+                            lineNo++;
+                            if (!flag)
+                            {
+                                // message sent to client
+                                Byte[] infoHeader = new Byte[1];
+                                infoHeader[0] = 0;
+                                thisClient.Send(infoHeader);
+
+                                string deleteMessage = "There is no such a file " + rawfilename + " belongs to you.\n";
+                                Byte[] buffer_toClient = new Byte[128];
+                                buffer_toClient = Encoding.Default.GetBytes(deleteMessage);
+                                thisClient.Send(buffer_toClient);
+                                
+                            }
+                        }
+                    }
 
 
                     if (receivedInfoHeader[0] == 3) 

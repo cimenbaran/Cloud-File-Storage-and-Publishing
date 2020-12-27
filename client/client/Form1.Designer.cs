@@ -46,6 +46,8 @@
             this.button_publiclist = new System.Windows.Forms.Button();
             this.button_copy = new System.Windows.Forms.Button();
             this.textBox_copy = new System.Windows.Forms.TextBox();
+            this.textBox_deleteFile = new System.Windows.Forms.TextBox();
+            this.button_deleteFile = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -89,7 +91,7 @@
             this.button_connect.Location = new System.Drawing.Point(149, 188);
             this.button_connect.Margin = new System.Windows.Forms.Padding(4);
             this.button_connect.Name = "button_connect";
-            this.button_connect.Size = new System.Drawing.Size(100, 28);
+            this.button_connect.Size = new System.Drawing.Size(132, 28);
             this.button_connect.TabIndex = 4;
             this.button_connect.Text = "Connect";
             this.button_connect.UseVisualStyleBackColor = true;
@@ -126,10 +128,10 @@
             // uploadFile
             // 
             this.uploadFile.Enabled = false;
-            this.uploadFile.Location = new System.Drawing.Point(145, 282);
+            this.uploadFile.Location = new System.Drawing.Point(149, 276);
             this.uploadFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.uploadFile.Name = "uploadFile";
-            this.uploadFile.Size = new System.Drawing.Size(147, 28);
+            this.uploadFile.Size = new System.Drawing.Size(132, 28);
             this.uploadFile.TabIndex = 5;
             this.uploadFile.Text = "Upload File";
             this.uploadFile.UseVisualStyleBackColor = true;
@@ -138,10 +140,10 @@
             // button_disconnect
             // 
             this.button_disconnect.Enabled = false;
-            this.button_disconnect.Location = new System.Drawing.Point(152, 231);
+            this.button_disconnect.Location = new System.Drawing.Point(149, 231);
             this.button_disconnect.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_disconnect.Name = "button_disconnect";
-            this.button_disconnect.Size = new System.Drawing.Size(96, 27);
+            this.button_disconnect.Size = new System.Drawing.Size(132, 27);
             this.button_disconnect.TabIndex = 9;
             this.button_disconnect.Text = "Disconnect";
             this.button_disconnect.UseVisualStyleBackColor = true;
@@ -150,10 +152,10 @@
             // button_download
             // 
             this.button_download.Enabled = false;
-            this.button_download.Location = new System.Drawing.Point(281, 433);
+            this.button_download.Location = new System.Drawing.Point(214, 434);
             this.button_download.Margin = new System.Windows.Forms.Padding(4);
             this.button_download.Name = "button_download";
-            this.button_download.Size = new System.Drawing.Size(100, 28);
+            this.button_download.Size = new System.Drawing.Size(85, 28);
             this.button_download.TabIndex = 10;
             this.button_download.Text = "Download";
             this.button_download.UseVisualStyleBackColor = true;
@@ -162,16 +164,16 @@
             // textBox_download
             // 
             this.textBox_download.Enabled = false;
-            this.textBox_download.Location = new System.Drawing.Point(281, 401);
+            this.textBox_download.Location = new System.Drawing.Point(214, 401);
             this.textBox_download.Margin = new System.Windows.Forms.Padding(4);
             this.textBox_download.Name = "textBox_download";
-            this.textBox_download.Size = new System.Drawing.Size(99, 22);
+            this.textBox_download.Size = new System.Drawing.Size(85, 22);
             this.textBox_download.TabIndex = 11;
             // 
             // button_list
             // 
             this.button_list.Enabled = false;
-            this.button_list.Location = new System.Drawing.Point(13, 366);
+            this.button_list.Location = new System.Drawing.Point(214, 336);
             this.button_list.Margin = new System.Windows.Forms.Padding(4);
             this.button_list.Name = "button_list";
             this.button_list.Size = new System.Drawing.Size(171, 28);
@@ -198,13 +200,13 @@
             this.textBox_toPublic.Location = new System.Drawing.Point(13, 401);
             this.textBox_toPublic.Margin = new System.Windows.Forms.Padding(4);
             this.textBox_toPublic.Name = "textBox_toPublic";
-            this.textBox_toPublic.Size = new System.Drawing.Size(99, 22);
+            this.textBox_toPublic.Size = new System.Drawing.Size(100, 22);
             this.textBox_toPublic.TabIndex = 14;
             // 
             // button_publiclist
             // 
             this.button_publiclist.Enabled = false;
-            this.button_publiclist.Location = new System.Drawing.Point(227, 366);
+            this.button_publiclist.Location = new System.Drawing.Point(13, 336);
             this.button_publiclist.Margin = new System.Windows.Forms.Padding(4);
             this.button_publiclist.Name = "button_publiclist";
             this.button_publiclist.Size = new System.Drawing.Size(155, 28);
@@ -232,11 +234,34 @@
             this.textBox_copy.Size = new System.Drawing.Size(87, 22);
             this.textBox_copy.TabIndex = 0;
             // 
+            // textBox_deleteFile
+            // 
+            this.textBox_deleteFile.Enabled = false;
+            this.textBox_deleteFile.Location = new System.Drawing.Point(308, 401);
+            this.textBox_deleteFile.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox_deleteFile.Name = "textBox_deleteFile";
+            this.textBox_deleteFile.Size = new System.Drawing.Size(91, 22);
+            this.textBox_deleteFile.TabIndex = 17;
+            // 
+            // button_deleteFile
+            // 
+            this.button_deleteFile.Enabled = false;
+            this.button_deleteFile.Location = new System.Drawing.Point(308, 434);
+            this.button_deleteFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_deleteFile.Name = "button_deleteFile";
+            this.button_deleteFile.Size = new System.Drawing.Size(91, 28);
+            this.button_deleteFile.TabIndex = 18;
+            this.button_deleteFile.Text = "Delete";
+            this.button_deleteFile.UseVisualStyleBackColor = true;
+            this.button_deleteFile.Click += new System.EventHandler(this.button_deleteFile_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1097, 481);
+            this.Controls.Add(this.button_deleteFile);
+            this.Controls.Add(this.textBox_deleteFile);
             this.Controls.Add(this.textBox_copy);
             this.Controls.Add(this.button_copy);
             this.Controls.Add(this.button_publiclist);
@@ -283,6 +308,8 @@
         private System.Windows.Forms.Button button_publiclist;
         private System.Windows.Forms.Button button_copy;
         private System.Windows.Forms.TextBox textBox_copy;
+        private System.Windows.Forms.TextBox textBox_deleteFile;
+        private System.Windows.Forms.Button button_deleteFile;
     }
 }
 
