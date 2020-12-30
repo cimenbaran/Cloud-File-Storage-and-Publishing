@@ -653,6 +653,19 @@ namespace client
                     toBeDeleted = Encoding.Default.GetBytes(toBeDeletedstring);
                     clientSocket.Send(toBeDeleted);
                 }
+
+                button_download.Enabled = false;
+                button_copy.Enabled = false;
+                button_deleteFile.Enabled = false;
+                textBox_download.Enabled = false;
+                button_makepublic.Enabled = false;
+                textBox_toPublic.Enabled = false;
+                textBox_copy.Enabled = false;
+                textBox_deleteFile.Enabled = false;
+                textBox_download.Text = String.Empty;
+                textBox_toPublic.Text = String.Empty;
+                textBox_copy.Text = String.Empty;
+                textBox_deleteFile.Text = String.Empty;
             }
             catch
             {
