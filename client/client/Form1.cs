@@ -22,7 +22,6 @@ namespace client
         List<String> list = new List<String>();
         List<String> publiclist = new List<String>();
         string username = "";
-        string copypath = "";
 
         // The headers explanation
         // -----------------------
@@ -301,14 +300,32 @@ namespace client
                     {
                         logs.AppendText("The server has disconnected.\n");
                         button_connect.Enabled = true;
+                        button_disconnect.Enabled = false;
                         textBox_port.Enabled = true;
                         textBox_ip.Enabled = true;
                         uploadFile.Enabled = false;
                         textBox_userName.Enabled = true;
                         button_download.Enabled = false;
                         textBox_download.Enabled = false;
+                        button_publiclist.Enabled = false;
+                        button_list.Enabled = false;
+                        button_pub_download.Enabled = false;
+                        textBox_pubdown.Enabled = false;
+                        textBox_ownername.Enabled = false;
+                        textBox_pubdown.Clear();
+                        textBox_ownername.Clear();
                         button_copy.Enabled = false;
+                        textBox_copy.Text = String.Empty;
                         textBox_copy.Enabled = false;
+
+                        button_deleteFile.Enabled = false;
+                        textBox_deleteFile.Text = String.Empty;
+                        textBox_deleteFile.Enabled = false;
+
+
+                        textBox_toPublic.Text = String.Empty;
+                        button_makepublic.Enabled = false;
+                        textBox_toPublic.Enabled = false;
 
                     }
 
@@ -380,6 +397,13 @@ namespace client
                     textBox_toPublic.Text = String.Empty;
                     textBox_copy.Text = String.Empty;
                     textBox_deleteFile.Text = String.Empty;
+                    button_copy.Enabled = false;
+                    textBox_copy.Text = String.Empty;
+                    textBox_copy.Enabled = false;
+
+                    button_deleteFile.Enabled = false;
+                    textBox_deleteFile.Text = String.Empty;
+                    textBox_deleteFile.Enabled = false;
                 }
             }
             catch (Exception ex)
@@ -413,6 +437,12 @@ namespace client
             textBox_toPublic.Enabled = false;
             textBox_toPublic.Text = String.Empty;
 
+            button_pub_download.Enabled = false;
+            textBox_pubdown.Enabled = false;
+            textBox_ownername.Enabled = false;
+            textBox_pubdown.Clear();
+            textBox_ownername.Clear();
+
             uploadFile.Enabled = false;
             button_download.Enabled = false;
             button_list.Enabled = false;
@@ -432,31 +462,15 @@ namespace client
         private void button_download_Click(object sender, EventArgs e)
         {
             string filename = textBox_download.Text;
-            ///////////////////////
-            // if in icine && den sonra list in icinde var mi yok mu kontrolu olcak 
-            // string list = "";
-            // list icinde bosluklarla ayrilabilir txt isimleri 
-            // bi global list tutulur burda
             bool flag = false;
             for (int i = 0; i < list.Count; i++)
             {
                 if (filename == list[i].Split('\t')[0])
                 {
-                    flag = true;
+                    
                     filename = username + "_" + filename;
+                    flag = true;
                     break;
-                }
-            }
-            if (!flag)
-            {
-                for (int i = 0; i < publiclist.Count; i++)
-                {
-                    if (filename == publiclist[i].Split('\t')[1])
-                    {
-                        flag = true;
-                        filename = publiclist[i].Split('\t')[0] + "_" + filename;
-                        break;
-                    }
                 }
             }
             if (filename == "" || !flag)
@@ -521,10 +535,16 @@ namespace client
                 infoHeader[0] = 1;
                 clientSocket.Send(infoHeader);
 
+                button_pub_download.Enabled = false;
+                textBox_pubdown.Enabled = false;
+                textBox_ownername.Enabled = false;
+                textBox_pubdown.Clear();
+                textBox_ownername.Clear();
 
                 bufferToPublic = Encoding.Default.GetBytes(fileNameToPublic);
                 clientSocket.Send(bufferToPublic);
                 textBox_toPublic.Clear();
+
                 
             }
             catch
@@ -536,9 +556,9 @@ namespace client
         private void button_publiclist_Click(object sender, EventArgs e)
         {
             publiclist.Clear();
-            button_download.Enabled = true;
-            textBox_download.Enabled = true;
-
+            button_pub_download.Enabled = true;
+            textBox_pubdown.Enabled = true;
+            textBox_ownername.Enabled = true;
 
             Byte[] infoHeader = new Byte[1];
             infoHeader[0] = 6;
@@ -671,6 +691,49 @@ namespace client
             {
 
             }
+        }
+
+        private void button_pub_download_Click(object sender, EventArgs e)
+        {
+            string owner_name = textBox_ownername.Text;
+            string fname = textBox_pubdown.Text;
+            bool flag = false;
+            for (int i = 0; i < publiclist.Count; i++)
+            {
+                if (fname == publiclist[i].Split('\t')[1] && owner_name == publiclist[i].Split('\t')[0])
+                {
+                    fname = publiclist[i].Split('\t')[0] + "_" + fname;
+                    flag = true;
+                    break;
+                }
+            }
+            if (fname == "" || !flag)
+            {
+                logs.AppendText("Wrong input for downloading... You must enter valid owner name and filename from the given public lists.\n");
+            }
+            else
+            {
+                Byte[] infoHeader = new Byte[1];
+                infoHeader[0] = 4;
+                using (var fbd = new FolderBrowserDialog())
+                {
+                    DialogResult result = fbd.ShowDialog();
+                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                    {
+                        string folderPath = fbd.SelectedPath;
+                        downloadpath = folderPath;
+                        downloadpath = folderPath.Replace(@"\", "/"); // DO NOT CHANGE PATH CORRECTION
+                    }
+                }
+                clientSocket.Send(infoHeader);
+                Byte[] buffer = new Byte[128];
+                buffer = Encoding.Default.GetBytes(fname);
+                clientSocket.Send(buffer);
+                textBox_pubdown.Clear();
+                textBox_ownername.Clear();
+
+            }
+
         }
     }
 }

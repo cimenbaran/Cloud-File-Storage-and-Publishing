@@ -48,6 +48,11 @@
             this.textBox_copy = new System.Windows.Forms.TextBox();
             this.textBox_deleteFile = new System.Windows.Forms.TextBox();
             this.button_deleteFile = new System.Windows.Forms.Button();
+            this.textBox_pubdown = new System.Windows.Forms.TextBox();
+            this.button_pub_download = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBox_ownername = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -94,7 +99,7 @@
             // 
             // logs
             // 
-            this.logs.Location = new System.Drawing.Point(305, 47);
+            this.logs.Location = new System.Drawing.Point(436, 48);
             this.logs.Name = "logs";
             this.logs.ReadOnly = true;
             this.logs.Size = new System.Drawing.Size(450, 328);
@@ -121,7 +126,7 @@
             // 
             this.uploadFile.Enabled = false;
             this.uploadFile.Location = new System.Drawing.Point(112, 224);
-            this.uploadFile.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.uploadFile.Margin = new System.Windows.Forms.Padding(2);
             this.uploadFile.Name = "uploadFile";
             this.uploadFile.Size = new System.Drawing.Size(99, 23);
             this.uploadFile.TabIndex = 5;
@@ -133,7 +138,7 @@
             // 
             this.button_disconnect.Enabled = false;
             this.button_disconnect.Location = new System.Drawing.Point(112, 188);
-            this.button_disconnect.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_disconnect.Margin = new System.Windows.Forms.Padding(2);
             this.button_disconnect.Name = "button_disconnect";
             this.button_disconnect.Size = new System.Drawing.Size(99, 22);
             this.button_disconnect.TabIndex = 9;
@@ -144,9 +149,9 @@
             // button_download
             // 
             this.button_download.Enabled = false;
-            this.button_download.Location = new System.Drawing.Point(2, 352);
+            this.button_download.Location = new System.Drawing.Point(275, 408);
             this.button_download.Name = "button_download";
-            this.button_download.Size = new System.Drawing.Size(64, 23);
+            this.button_download.Size = new System.Drawing.Size(75, 23);
             this.button_download.TabIndex = 10;
             this.button_download.Text = "Download";
             this.button_download.UseVisualStyleBackColor = true;
@@ -155,15 +160,15 @@
             // textBox_download
             // 
             this.textBox_download.Enabled = false;
-            this.textBox_download.Location = new System.Drawing.Point(2, 326);
+            this.textBox_download.Location = new System.Drawing.Point(275, 382);
             this.textBox_download.Name = "textBox_download";
-            this.textBox_download.Size = new System.Drawing.Size(65, 20);
+            this.textBox_download.Size = new System.Drawing.Size(75, 20);
             this.textBox_download.TabIndex = 11;
             // 
             // button_list
             // 
             this.button_list.Enabled = false;
-            this.button_list.Location = new System.Drawing.Point(160, 273);
+            this.button_list.Location = new System.Drawing.Point(275, 273);
             this.button_list.Name = "button_list";
             this.button_list.Size = new System.Drawing.Size(128, 23);
             this.button_list.TabIndex = 12;
@@ -174,7 +179,7 @@
             // button_makepublic
             // 
             this.button_makepublic.Enabled = false;
-            this.button_makepublic.Location = new System.Drawing.Point(225, 354);
+            this.button_makepublic.Location = new System.Drawing.Point(356, 354);
             this.button_makepublic.Name = "button_makepublic";
             this.button_makepublic.Size = new System.Drawing.Size(75, 23);
             this.button_makepublic.TabIndex = 13;
@@ -185,15 +190,15 @@
             // textBox_toPublic
             // 
             this.textBox_toPublic.Enabled = false;
-            this.textBox_toPublic.Location = new System.Drawing.Point(226, 326);
+            this.textBox_toPublic.Location = new System.Drawing.Point(356, 326);
             this.textBox_toPublic.Name = "textBox_toPublic";
-            this.textBox_toPublic.Size = new System.Drawing.Size(74, 20);
+            this.textBox_toPublic.Size = new System.Drawing.Size(75, 20);
             this.textBox_toPublic.TabIndex = 14;
             // 
             // button_publiclist
             // 
             this.button_publiclist.Enabled = false;
-            this.button_publiclist.Location = new System.Drawing.Point(10, 273);
+            this.button_publiclist.Location = new System.Drawing.Point(74, 273);
             this.button_publiclist.Name = "button_publiclist";
             this.button_publiclist.Size = new System.Drawing.Size(116, 23);
             this.button_publiclist.TabIndex = 15;
@@ -204,10 +209,10 @@
             // button_copy
             // 
             this.button_copy.Enabled = false;
-            this.button_copy.Location = new System.Drawing.Point(81, 354);
-            this.button_copy.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_copy.Location = new System.Drawing.Point(356, 408);
+            this.button_copy.Margin = new System.Windows.Forms.Padding(2);
             this.button_copy.Name = "button_copy";
-            this.button_copy.Size = new System.Drawing.Size(64, 22);
+            this.button_copy.Size = new System.Drawing.Size(75, 23);
             this.button_copy.TabIndex = 16;
             this.button_copy.Text = "Copy a file";
             this.button_copy.UseVisualStyleBackColor = true;
@@ -216,37 +221,87 @@
             // textBox_copy
             // 
             this.textBox_copy.Enabled = false;
-            this.textBox_copy.Location = new System.Drawing.Point(81, 326);
-            this.textBox_copy.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_copy.Location = new System.Drawing.Point(356, 382);
+            this.textBox_copy.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_copy.Name = "textBox_copy";
-            this.textBox_copy.Size = new System.Drawing.Size(66, 20);
+            this.textBox_copy.Size = new System.Drawing.Size(75, 20);
             this.textBox_copy.TabIndex = 0;
             // 
             // textBox_deleteFile
             // 
             this.textBox_deleteFile.Enabled = false;
-            this.textBox_deleteFile.Location = new System.Drawing.Point(152, 326);
+            this.textBox_deleteFile.Location = new System.Drawing.Point(275, 326);
             this.textBox_deleteFile.Name = "textBox_deleteFile";
-            this.textBox_deleteFile.Size = new System.Drawing.Size(69, 20);
+            this.textBox_deleteFile.Size = new System.Drawing.Size(75, 20);
             this.textBox_deleteFile.TabIndex = 17;
             // 
             // button_deleteFile
             // 
             this.button_deleteFile.Enabled = false;
-            this.button_deleteFile.Location = new System.Drawing.Point(152, 353);
-            this.button_deleteFile.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_deleteFile.Location = new System.Drawing.Point(275, 354);
+            this.button_deleteFile.Margin = new System.Windows.Forms.Padding(2);
             this.button_deleteFile.Name = "button_deleteFile";
-            this.button_deleteFile.Size = new System.Drawing.Size(68, 23);
+            this.button_deleteFile.Size = new System.Drawing.Size(75, 23);
             this.button_deleteFile.TabIndex = 18;
             this.button_deleteFile.Text = "Delete";
             this.button_deleteFile.UseVisualStyleBackColor = true;
             this.button_deleteFile.Click += new System.EventHandler(this.button_deleteFile_Click);
             // 
+            // textBox_pubdown
+            // 
+            this.textBox_pubdown.Enabled = false;
+            this.textBox_pubdown.Location = new System.Drawing.Point(90, 351);
+            this.textBox_pubdown.Name = "textBox_pubdown";
+            this.textBox_pubdown.Size = new System.Drawing.Size(100, 20);
+            this.textBox_pubdown.TabIndex = 19;
+            // 
+            // button_pub_download
+            // 
+            this.button_pub_download.Enabled = false;
+            this.button_pub_download.Location = new System.Drawing.Point(90, 382);
+            this.button_pub_download.Name = "button_pub_download";
+            this.button_pub_download.Size = new System.Drawing.Size(100, 23);
+            this.button_pub_download.TabIndex = 20;
+            this.button_pub_download.Text = "Public Download";
+            this.button_pub_download.UseVisualStyleBackColor = true;
+            this.button_pub_download.Click += new System.EventHandler(this.button_pub_download_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(29, 354);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(52, 13);
+            this.label3.TabIndex = 21;
+            this.label3.Text = "Filename:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 328);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(72, 13);
+            this.label5.TabIndex = 22;
+            this.label5.Text = "Owner Name:";
+            // 
+            // textBox_ownername
+            // 
+            this.textBox_ownername.Enabled = false;
+            this.textBox_ownername.Location = new System.Drawing.Point(90, 325);
+            this.textBox_ownername.Name = "textBox_ownername";
+            this.textBox_ownername.Size = new System.Drawing.Size(100, 20);
+            this.textBox_ownername.TabIndex = 23;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(823, 391);
+            this.ClientSize = new System.Drawing.Size(1025, 479);
+            this.Controls.Add(this.textBox_ownername);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.button_pub_download);
+            this.Controls.Add(this.textBox_pubdown);
             this.Controls.Add(this.button_deleteFile);
             this.Controls.Add(this.textBox_deleteFile);
             this.Controls.Add(this.textBox_copy);
@@ -296,6 +351,11 @@
         private System.Windows.Forms.TextBox textBox_copy;
         private System.Windows.Forms.TextBox textBox_deleteFile;
         private System.Windows.Forms.Button button_deleteFile;
+        private System.Windows.Forms.TextBox textBox_pubdown;
+        private System.Windows.Forms.Button button_pub_download;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox_ownername;
     }
 }
 

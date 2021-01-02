@@ -543,26 +543,26 @@ namespace server
                         string filename = Encoding.Default.GetString(buffer_filename);
                         filename = filename.Substring(0, filename.IndexOf("\0"));
                         
-                        if (!File.Exists(DB_Path + "/" + filename))
-                        {
-                            StreamReader logReader = new StreamReader(LOGS_Path);
-                            string line = "";
-                            while ((line = logReader.ReadLine()) != null)
-                            {
+                        //if (!File.Exists(DB_Path + "/" + filename))
+                        //{
+                        //    StreamReader logReader = new StreamReader(LOGS_Path);
+                        //    string line = "";
+                        //    while ((line = logReader.ReadLine()) != null)
+                        //    {
                                 
-                                if (line.Split('\t')[2] == "0" || line.Split('\t')[2] == "2")
-                                {
-                                    continue;
-                                }
-                                if (line.Split('\t')[1].Split('_')[1] != filename.Split('_')[1])
-                                {
-                                    continue;
-                                }
-                                filename = line.Split('\t')[1];
-                            }
-                            logReader.Close();
+                        //        if (line.Split('\t')[2] == "0" || line.Split('\t')[2] == "2")
+                        //        {
+                        //            continue;
+                        //        }
+                        //        if (line.Split('\t')[1].Split('_')[1] != filename.Split('_')[1])
+                        //        {
+                        //            continue;
+                        //        }
+                        //        filename = line.Split('\t')[1];
+                        //    }
+                        //    logReader.Close();
 
-                        }
+                        //}
                         string filepathname = DB_Path + "/" + filename;
 
                         int fileProperties = 256; // FileName + The Data's Length
