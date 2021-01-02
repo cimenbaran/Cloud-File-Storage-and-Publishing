@@ -366,9 +366,9 @@ namespace server
                             if (lineFileName.Trim() == rawfilename)
                             {
                                 //logs.AppendText(lineNo + "file bulundu\n");
-                                flag = true;
+                                
 
-                                if (line.Split('\t')[2] == "2")
+                                /*if (line.Split('\t')[2] == "2")
                                 {
 
                                     logReader.Close();
@@ -383,9 +383,10 @@ namespace server
                                     thisClient.Send(buffer_toClient);
 
                                     break;
-                                }
-                                else
+                                }*/
+                                if(line.Split('\t')[2] == "0" || line.Split('\t')[2] == "1")
                                 {
+                                    flag = true;//means file is found
                                     logReader.Close();
                                     string newLine = line.Split('\t')[0] + '\t' + line.Split('\t')[1] + '\t' + "2\t" + line.Split('\t')[3] + '\t' + line.Split('\t')[4];
                                     lineChanger(newLine, LOGS_Path, lineNo);
@@ -403,20 +404,21 @@ namespace server
                                     break;
                                 }
                             }
-                            lineNo++;
-                            if (!flag)
-                            {
-                                // message sent to client
-                                Byte[] infoHeader = new Byte[1];
-                                infoHeader[0] = 0;
-                                thisClient.Send(infoHeader);
+                            lineNo++;                         
+                        }
+                        logReader.Close();
+                        if (!flag)
+                        {
+                            // message sent to client
+                            Byte[] infoHeader = new Byte[1];
+                            infoHeader[0] = 0;
+                            thisClient.Send(infoHeader);
 
-                                string deleteMessage = "There is no such a file " + rawfilename + " belongs to you.\n";
-                                Byte[] buffer_toClient = new Byte[128];
-                                buffer_toClient = Encoding.Default.GetBytes(deleteMessage);
-                                thisClient.Send(buffer_toClient);
-                                
-                            }
+                            string deleteMessage = "There is no such a file " + rawfilename + " belongs to you.\n";
+                            Byte[] buffer_toClient = new Byte[128];
+                            buffer_toClient = Encoding.Default.GetBytes(deleteMessage);
+                            thisClient.Send(buffer_toClient);
+
                         }
                     }
 
