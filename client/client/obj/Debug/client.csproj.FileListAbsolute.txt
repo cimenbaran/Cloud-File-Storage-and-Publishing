@@ -111,3 +111,6 @@ C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\obj\Debu
 C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\obj\Debug\client.csproj.CoreCompileInputs.cache
 C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\obj\Debug\client.exe
 C:\Users\Batuhan Demir\Desktop\CS 408 Project\cs408_cloud\client\client\obj\Debug\client.pdb
+C:\Users\kagan\Desktop\cs408_cloud\client\client\bin\Debug\client.exe.config
+C:\Users\kagan\Desktop\cs408_cloud\client\client\obj\Debug\client.exe
+C:\Users\kagan\Desktop\cs408_cloud\client\client\obj\Debug\client.pdb

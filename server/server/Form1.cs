@@ -699,7 +699,7 @@ namespace server
             //bool flag2 = false;
             while ((line = logReader.ReadLine()) != null)
             {
-                if (!(line.Split('\t')[0] == clientUsername))
+                if ((!(line.Split('\t')[0] == clientUsername)) || line.Split('\t')[2] == "2")
                 {
                     lineNo++;
                     continue;
