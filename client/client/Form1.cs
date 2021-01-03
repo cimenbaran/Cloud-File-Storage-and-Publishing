@@ -29,7 +29,7 @@ namespace client
         //      0 -> Sending a file to Server
         //      1 -> Make file public
         //      2 -> Delete File
-        //      3 ->
+        //      3 -> Sending file information to be copied on server side.
         //      4 -> Downloading file from the Server (Download)
         //      5 -> Getting private list from Server (Get Private List)
         //      6 -> Getting public list from Server (Get Public List)
@@ -38,12 +38,12 @@ namespace client
         //      Server --> Client
         //      0 -> Message to Client
         //      1 ->
-        //      2 ->
-        //      3 ->
-        //      4 -> Sending file to Client (Download)
-        //      5 -> Sending private files list to Client(Get Private List)
-        //      6 -> Sending public files list to Client(Get Public List)
-        //      7 ->
+        //      2 -> 
+        //      3 -> Create a copy acknowledgement.
+        //      4 -> Sending file to Client (Download).
+        //      5 -> Sending private list.
+        //      6 -> Sending public list.
+        //      7 -> Other clients changed the Publiclist acknowledgement.
         // -----------------------
         //
         // Server'dan Client'a Recieve işlemi yapacaksanız
@@ -292,7 +292,29 @@ namespace client
                         }
                     }
 
-                    if (receivedInfoHeader[0] == 7) { }
+                    if (receivedInfoHeader[0] == 7)
+                    {
+                        try
+                        {
+                            Byte[] buffer = new Byte[64];
+                            clientSocket.Receive(buffer);
+
+                            string incomingMessage = Encoding.Default.GetString(buffer);
+                            incomingMessage = incomingMessage.Substring(0, incomingMessage.IndexOf("\0"));
+                            button_pub_download.Enabled = false;
+                            textBox_pubdown.Enabled = false;
+                            textBox_ownername.Enabled = false;
+                            textBox_pubdown.Clear();
+                            textBox_ownername.Clear();
+                            logs.AppendText("Server: " + incomingMessage + "\n");
+                            
+                        }
+                        catch (Exception)
+                        {
+                            logs.AppendText("Public list update problem.\n");
+                            throw;
+                        }
+                    }
                 }
                 catch
                 {
@@ -534,12 +556,6 @@ namespace client
                 Byte[] infoHeader = new Byte[1];
                 infoHeader[0] = 1;
                 clientSocket.Send(infoHeader);
-
-                button_pub_download.Enabled = false;
-                textBox_pubdown.Enabled = false;
-                textBox_ownername.Enabled = false;
-                textBox_pubdown.Clear();
-                textBox_ownername.Clear();
 
                 bufferToPublic = Encoding.Default.GetBytes(fileNameToPublic);
                 clientSocket.Send(bufferToPublic);

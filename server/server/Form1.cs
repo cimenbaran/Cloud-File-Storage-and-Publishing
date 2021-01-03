@@ -38,12 +38,12 @@ namespace server
         //      Server --> Client
         //      0 -> Message to Client
         //      1 ->
-        //      2 ->
-        //      3 -> Create a on the server (Copy)
-        //      4 -> Sending file to Client (Download)
-        //      5 -> Sending list as a string (Get List)
-        //      6 ->
-        //      7 ->
+        //      2 -> 
+        //      3 -> Create a copy acknowledgement.
+        //      4 -> Sending file to Client (Download).
+        //      5 -> Sending private list.
+        //      6 -> Sending public list.
+        //      7 -> Other clients changed the Publiclist acknowledgement.
         // -----------------------
         //
         // Client'tan Server'a Recieve işlemi yapacaksanız
@@ -323,6 +323,28 @@ namespace server
                             Byte[] buffer_toClient = new Byte[128];
                             buffer_toClient = Encoding.Default.GetBytes(toClient);
                             thisClient.Send(buffer_toClient);
+                            if (toClient == fileNameToPublic + " made public succesfully.")
+                            {
+                                Byte[] infoHeader2 = new Byte[1];
+                                infoHeader2[0] = 7;
+                                foreach (Socket client in clientSockets)
+                                {
+                                    try
+                                    {
+                                        client.Send(infoHeader2);
+                                        string msg = "Public list has changed.";
+                                        Byte[] buffer_msg = Encoding.Default.GetBytes(msg);
+                                        client.Send(buffer_msg);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        logs.AppendText("Problem in makepublic acknowledgement.\n");
+                                        throw;
+                                    }
+                                }
+                            }
+                            
+
                         }
                         catch (Exception e)
                         {
@@ -388,6 +410,26 @@ namespace server
                                 {
                                     flag = true;//means file is found
                                     logReader.Close();
+                                    if (line.Split('\t')[2] == "1")
+                                    {
+                                        Byte[] infoHeader2 = new Byte[1];
+                                        infoHeader2[0] = 7;
+                                        foreach (Socket client in clientSockets)
+                                        {
+                                            try
+                                            {
+                                                client.Send(infoHeader2);
+                                                string msg = "Public list has changed.";
+                                                Byte[] buffer_msg = Encoding.Default.GetBytes(msg);
+                                                client.Send(buffer_msg);
+                                            }
+                                            catch (Exception)
+                                            {
+                                                logs.AppendText("Problem in delete acknowledgement.\n");
+                                                throw;
+                                            }
+                                        }
+                                    }
                                     string newLine = line.Split('\t')[0] + '\t' + line.Split('\t')[1] + '\t' + "2\t" + line.Split('\t')[3] + '\t' + line.Split('\t')[4];
                                     lineChanger(newLine, LOGS_Path, lineNo);
                                     logs.AppendText(rawfilename + " is deleted by "+ clientUsername + '\n');
